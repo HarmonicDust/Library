@@ -352,6 +352,7 @@ function library:Create(name)
 		Main.Position = UDim2.new(0.0198121723, 0, 0.200636938, 0)
 		Main.Size = UDim2.new(0, 439, 0, 242)
 		Main.ScrollBarThickness = 3
+		Main.CanvasSize = UDim2.new(0, 0, 0, 0)
 		
 		function updatelog:Update(uname, date, desc)
 			uname = uname or ""

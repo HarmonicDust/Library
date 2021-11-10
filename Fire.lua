@@ -391,7 +391,7 @@ function library:Create(name)
 			Name.Position = UDim2.new(0.0714102536, 0, 0, 0)
 			Name.Size = UDim2.new(0, 83, 0, 28)
 			Name.Font = Enum.Font.Gotham
-			Name.Text = tname
+			Name.Text = uname
 			Name.TextColor3 = Color3.fromRGB(255, 255, 255)
 			Name.TextSize = 12.000
 			Name.TextWrapped = true

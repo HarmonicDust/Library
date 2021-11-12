@@ -567,6 +567,31 @@ function library:Create(name)
 			TabScroll.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 10);
 		end)
 
+        function items:Label(info) --a lot of stuff :/
+            info.Text = info.Text or ""
+            info.TextScaled = info.TextScaled or false
+            info.TextWrapped = info.TextWrapped or false
+            info.TextColor = info.TextColor3 or Color3.fromRGB(155, 155, 155)
+            info.Font = info.Font or Enum.Font.SourceSansBold
+            info.TextSize = info.TextSize or 14
+
+            local TextLabel = Instance.new("TextLabel")
+
+            TextLabel.Parent = TabScroll
+            TextLabel.Name = "Text"
+            TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+            TextLabel.BackgroundTransparency = 1.000
+            TextLabel.Position = UDim2.new(0.0109170303, 0, 0.226114646, 0)
+            TextLabel.Size = UDim2.new(0, 445, 0, 13)
+            TextLabel.Font = info.Font
+            TextLabel.TextColor3 = info.TextColor
+            TextLabel.TextScaled = info.TextScaled
+            TextLabel.TextSize = info.TextSize
+            TextLabel.TextWrapped = info.TextWrapped
+            TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+            TextLabel.Text = info.Text
+        end
+
 		function items:Button(name, callback)
 			name = name or ""
 			callback = callback or function() end

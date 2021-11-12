@@ -79,7 +79,7 @@ function library:Create(name)
 	--Properties:
 
 	Library_.Name = "Library_"
-	Library_.Parent = game.Players.LocalPlayer.PlayerGui
+	Library_.Parent = game.CoreGui
 	Library_.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
 	Main.Name = "Main"

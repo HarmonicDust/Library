@@ -564,7 +564,7 @@ function library:Create(name)
 		
 		UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 			local AbsoluteSize = UIListLayout_2.AbsoluteContentSize;
-			TabScroll.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
+			TabScroll.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 10);
 		end)
 
 		function items:Button(name, callback)

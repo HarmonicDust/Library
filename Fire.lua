@@ -223,8 +223,8 @@ function library:Create(name)
 	UIListLayout.Padding = UDim.new(0, 3)
 	
 	UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-		local AbsoluteSize = script.Parent.AbsoluteContentSize;
-		script.Parent.Parent.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
+		local AbsoluteSize = UIListLayout.AbsoluteContentSize;
+		TabSelection.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
 	end)
 
 	UIPadding.Parent = TabSelectionScroll
@@ -563,8 +563,8 @@ function library:Create(name)
 		-- Scripts:
 		
 		UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-			local AbsoluteSize = script.Parent.AbsoluteContentSize;
-			script.Parent.Parent.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
+			local AbsoluteSize = UIListLayout_2.AbsoluteContentSize;
+			TabScroll.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
 		end)
 		
 		coroutine.wrap(OQUL_fake_script)()

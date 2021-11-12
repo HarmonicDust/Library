@@ -566,8 +566,7 @@ function library:Create(name)
 			local AbsoluteSize = UIListLayout_2.AbsoluteContentSize;
 			TabScroll.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
 		end)
-		
-		coroutine.wrap(OQUL_fake_script)()
+
 		function items:Button(name, callback)
 			name = name or ""
 			callback = callback or function() end

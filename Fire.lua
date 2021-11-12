@@ -221,6 +221,11 @@ function library:Create(name)
 	UIListLayout.Parent = TabSelectionScroll
 	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	UIListLayout.Padding = UDim.new(0, 3)
+	
+	UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+		local AbsoluteSize = script.Parent.AbsoluteContentSize;
+		script.Parent.Parent.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
+	end)
 
 	UIPadding.Parent = TabSelectionScroll
 	UIPadding.PaddingLeft = UDim.new(0, 5)
@@ -235,7 +240,6 @@ function library:Create(name)
 	Tabs_2.BorderColor3 = Color3.fromRGB(27, 42, 53)
 	Tabs_2.Position = UDim2.new(0.0326530598, 0, 0.122340426, 0)
 	Tabs_2.Size = UDim2.new(0, 458, 0, 314)
-
 
 	UICorner_8.CornerRadius = UDim.new(0, 6)
 	UICorner_8.Parent = Tabs_2
@@ -558,14 +562,11 @@ function library:Create(name)
 
 		-- Scripts:
 		
-		local function OQUL_fake_script() -- UIListLayout.LocalScript 
-			local script = Instance.new('LocalScript', UIListLayout)
-
-			script.Parent:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-				local AbsoluteSize = script.Parent.AbsoluteContentSize;
-				script.Parent.Parent.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
-			end)
-		end
+		UIListLayout_2:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+			local AbsoluteSize = script.Parent.AbsoluteContentSize;
+			script.Parent.Parent.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
+		end)
+		
 		coroutine.wrap(OQUL_fake_script)()
 		function items:Button(name, callback)
 			name = name or ""

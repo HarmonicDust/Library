@@ -224,7 +224,7 @@ function library:Create(name)
 	
 	UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 		local AbsoluteSize = UIListLayout.AbsoluteContentSize;
-		TabSelection.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
+		TabSelectionScroll.CanvasSize = UDim2.new(0, 0, 0, AbsoluteSize.Y + 5);
 	end)
 
 	UIPadding.Parent = TabSelectionScroll

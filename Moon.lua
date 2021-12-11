@@ -1,7 +1,5 @@
 --[[
 Written for Mikee :)
-Slider Positions are not 100% accurate, the higher the max is, the lower the position is, i'm going to see if there is a way to fix this,
-until then the only fix is by setting the default position to be just a bit higher (or a lot, depending on the amount the max is)
 ]]
 
 local function dragify(Frame)
@@ -509,6 +507,8 @@ function library:Create(Name)
 
 		function _Tabs:CreateToggle(Name, Activated, Callback)
 			Activated = Activated or false;
+			
+			local Funcs = {}
 
 			local Toggle = Instance.new("TextButton")
 			local UICorner_8 = Instance.new("UICorner")
@@ -601,11 +601,29 @@ function library:Create(Name)
 			else
 				Checked.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
 			end
+			
+			Funcs.SetToggle = function(Bool)
+				assert(Bool ~= nil, "No parameters passed")
+				
+				State = Bool
+				Callback(State)
+				if State then
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(0, 200, 255)}):Play()
+				else
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(65, 65, 65)}):Play()
+				end
+			end
+			
+			Funcs.IsEnabled = function()
+				return State
+			end
+			
 			Checked.Position = UDim2.new(0.916999996, 0, 0.207000002, 0)
 			Checked.Size = UDim2.new(0, 18, 0, 18)
 
 			UICorner_9.CornerRadius = UDim.new(0, 4)
 			UICorner_9.Parent = Checked
+			return Funcs
 		end
 
 		function _Tabs:CreateSlider(_Name, Minimum, Maximum, Default, Callback)

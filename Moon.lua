@@ -1,5 +1,7 @@
 --[[
 Written for Mikee :)
+Slider Positions are not 100% accurate, the higher the max is, the lower the position is, i'm going to see if there is a way to fix this,
+until then the only fix is by setting the default position to be just a bit higher (or a lot, depending on the amount the max is)
 ]]
 
 local function dragify(Frame)
@@ -456,6 +458,8 @@ function library:Create(Name)
 		local _Tabs = {};
 
 		function _Tabs:CreateButton(Name, Callback)
+			
+			local Funcs = {}
 
 			local Button = Instance.new("TextButton")
 			local UICorner_7 = Instance.new("UICorner")
@@ -474,22 +478,16 @@ function library:Create(Name)
 			Button.MouseButton1Click:Connect(function()
 				Callback()
 			end)
-
-			UICorner_7.CornerRadius = UDim.new(0, 4)
-			UICorner_7.Parent = Button
-
-			Sample.Name = "Sample"
-			Sample.Parent = Button
-			Sample.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			Sample.BackgroundTransparency = 1.000
-			Sample.Image = "http://www.roblox.com/asset/?id=4560909609"
-			Sample.ImageTransparency = 0.600
-
-			Button.MouseButton1Click:Connect(function()
+			
+			Funcs.Fire = function()
+				spawn(function()
+					Callback()
+				end)
 				local c = Sample:Clone()
 				c.Parent = Button
-				local x, y = (game.Players.LocalPlayer:GetMouse().X - c.AbsolutePosition.X), (game.Players.LocalPlayer:GetMouse().Y - c.AbsolutePosition.Y)
-				c.Position = UDim2.new(0, x, 0, y)
+				local _ = Instance.new("UIListLayout", Button)
+				_.HorizontalAlignment = Enum.HorizontalAlignment.Center
+				_.VerticalAlignment = Enum.VerticalAlignment.Center
 				local len, size = 0.35, nil
 				if Button.AbsoluteSize.X >= Button.AbsoluteSize.Y then
 					size = (Button.AbsoluteSize.X * 1.5)
@@ -502,7 +500,40 @@ function library:Create(Name)
 					wait(len / 12)
 				end
 				c:Destroy()
+				_:Destroy()
+			end
+
+			UICorner_7.CornerRadius = UDim.new(0, 4)
+			UICorner_7.Parent = Button
+
+			Sample.Name = "Sample"
+			Sample.Parent = Button
+			Sample.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Sample.BackgroundTransparency = 1.000
+			Sample.Image = "http://www.roblox.com/asset/?id=4560909609"
+			Sample.ImageTransparency = 0.600
+
+			Button.MouseButton1Click:Connect(function()
+				spawn(function()
+					local c = Sample:Clone()
+					c.Parent = Button
+					local x, y = (game.Players.LocalPlayer:GetMouse().X - c.AbsolutePosition.X), (game.Players.LocalPlayer:GetMouse().Y - c.AbsolutePosition.Y)
+					c.Position = UDim2.new(0, x, 0, y)
+					local len, size = 0.35, nil
+					if Button.AbsoluteSize.X >= Button.AbsoluteSize.Y then
+						size = (Button.AbsoluteSize.X * 1.5)
+					else
+						size = (Button.AbsoluteSize.Y * 1.5)
+					end
+					c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+					for i = 1, 10 do
+						c.ImageTransparency = c.ImageTransparency + 0.05
+						wait(len / 12)
+					end
+					c:Destroy()
+				end)
 			end)
+			return Funcs
 		end
 
 		function _Tabs:CreateToggle(Name, Activated, Callback)

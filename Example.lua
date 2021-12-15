@@ -25,8 +25,7 @@ dropdown:AddButton("Option #2", function()
 	print("Option 2 clicked")
 end)
 
-tab:CreateSlider("Slider", 0, 100, 50, function(amount)
-	print(amount)
+tab:CreateSlider("Slider", 0, 100, 50, function(amount) --name, min, max, default, callback
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = amount
 end)
 

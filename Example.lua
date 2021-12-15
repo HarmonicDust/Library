@@ -1,5 +1,5 @@
 --Initializer
-local library = require(game.ReplicatedStorage.ModuleScript)
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Proxides/Library/main/Moon.lua", true))()
 
 local window = library:Create("Moon Library") --Name of the library
 

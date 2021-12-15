@@ -71,6 +71,7 @@ function library:Create(Name)
 
 	Library.Name = "Library"
 	Library.Parent = game.Players.LocalPlayer.PlayerGui
+	Library.ResetOnSpawn = false
 
 	Descendant.Name = "Descendant"
 	Descendant.Parent = Library
@@ -251,6 +252,14 @@ function library:Create(Name)
 					tween:Play()
 				end
 			end
+		end
+	end
+	
+	function library:isLibraryOpen()
+		if game.Players.LocalPlayer.PlayerGui.Library.Descendant.FirstBorder.BackgroundTransparency ~= 0 then --shit method tbh
+			return false
+		else
+			return true
 		end
 	end
 
@@ -458,7 +467,7 @@ function library:Create(Name)
 		local _Tabs = {};
 
 		function _Tabs:CreateButton(Name, Callback)
-			
+
 			local Funcs = {}
 
 			local Button = Instance.new("TextButton")
@@ -478,7 +487,7 @@ function library:Create(Name)
 			Button.MouseButton1Click:Connect(function()
 				Callback()
 			end)
-			
+
 			Funcs.Fire = function()
 				spawn(function()
 					Callback()
@@ -538,7 +547,7 @@ function library:Create(Name)
 
 		function _Tabs:CreateToggle(Name, Activated, Callback)
 			Activated = Activated or false;
-			
+
 			local Funcs = {}
 
 			local Toggle = Instance.new("TextButton")
@@ -632,10 +641,10 @@ function library:Create(Name)
 			else
 				Checked.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
 			end
-			
+
 			Funcs.SetToggle = function(Bool)
 				assert(Bool ~= nil, "No parameters passed")
-				
+
 				State = Bool
 				Callback(State)
 				if State then
@@ -644,11 +653,11 @@ function library:Create(Name)
 					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(65, 65, 65)}):Play()
 				end
 			end
-			
+
 			Funcs.IsEnabled = function()
 				return State
 			end
-			
+
 			Checked.Position = UDim2.new(0.916999996, 0, 0.207000002, 0)
 			Checked.Size = UDim2.new(0, 18, 0, 18)
 

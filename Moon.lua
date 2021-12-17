@@ -71,7 +71,6 @@ function library:Create(Name)
 
 	Library.Name = "Library"
 	Library.Parent = game.Players.LocalPlayer.PlayerGui
-	Library.ResetOnSpawn = false
 
 	Descendant.Name = "Descendant"
 	Descendant.Parent = Library
@@ -254,25 +253,15 @@ function library:Create(Name)
 			end
 		end
 	end
-	
-	function library:isLibraryOpen()
-		if game.Players.LocalPlayer.PlayerGui.Library.Descendant.FirstBorder.BackgroundTransparency ~= 0 then --shit method tbh
-			return false
-		else
-			return true
-		end
-	end
 
 	function library:Close(OpenVisible)
 		OpenVisible = OpenVisible or true
-		if OpenVisible == true then
+		if OpenVisible then
 			local btn = game.Players.LocalPlayer.PlayerGui:WaitForChild("Open")
 			local a = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {BackgroundTransparency = 0})
 			local b = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {TextTransparency = 0})
 			a:Play()
 			b:Play()
-		else
-			--;
 		end
 
 		local visibility = false
@@ -673,6 +662,8 @@ function library:Create(Name)
 			Minimum = Minimum or 0
 			Maximum = Maximum or 100
 			Default = Default or Minimum
+			
+			local Funcs = {}
 
 			local Slider = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
@@ -883,9 +874,16 @@ function library:Create(Name)
 			end
 
 			Value.Text = tostring(math.floor(Slide)).."/"..Maximum
+			Funcs.CallCurentValue = function()
+				Callback(math.floor(Slide))
+			end
+			return Funcs
 		end
 
 		function _Tabs:CreateLabel(_Text)
+
+			local Funcs = {}
+
 			local Text = Instance.new("TextLabel")
 			local UICorner_12 = Instance.new("UICorner")
 
@@ -899,6 +897,11 @@ function library:Create(Name)
 
 			UICorner_12.CornerRadius = UDim.new(0, 4)
 			UICorner_12.Parent = Text
+
+			Funcs.Set = function(...)
+				Text.Text = ...
+			end
+			return Funcs
 		end
 
 		function _Tabs:ExpandBy(Int)

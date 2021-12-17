@@ -188,12 +188,13 @@ function library:Create(Name)
 
 	local ts = game:GetService("TweenService")
 
+    function library:isLibraryOpen()
+        if FirstBorder.BackgroundTransparency ~= 0 then
+            return false; else return true
+        end
+    end
+
 	function library:Open()
-		local btn = game.Players.LocalPlayer.PlayerGui:WaitForChild("Open")
-		local a = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {BackgroundTransparency = 1})
-		local b = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {TextTransparency = 1})
-		a:Play()
-		b:Play()
 
 		local visibility = true
 		local shit = {"Frame", "ScrollingFrame"}
@@ -255,14 +256,14 @@ function library:Create(Name)
 	end
 
 	function library:Close(OpenVisible)
-		OpenVisible = OpenVisible or true
+		--[[OpenVisible = OpenVisible or true
 		if OpenVisible then
 			local btn = game.Players.LocalPlayer.PlayerGui:WaitForChild("Open")
 			local a = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {BackgroundTransparency = 0})
 			local b = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {TextTransparency = 0})
 			a:Play()
 			b:Play()
-		end
+		end]]--
 
 		local visibility = false
 		local shit = {"Frame", "ScrollingFrame"}
@@ -320,35 +321,6 @@ function library:Create(Name)
 			end
 		end
 	end
-
-	local Open1 = Instance.new("ScreenGui")
-	local OpenBtn = Instance.new("TextButton")
-	local UICorner = Instance.new("UICorner")
-
-	local shit = {"Frame", "ScrollingFrame"}
-	local shit3 = {"ImageButton", "ImageLabel"}
-	local ts = game:GetService("TweenService")
-
-	Open1.Name = "Open"
-	Open1.Parent = game.Players.LocalPlayer.PlayerGui
-
-	OpenBtn.Name = "OpenBtn"
-	OpenBtn.Parent = Open1
-	OpenBtn.BackgroundColor3 = Color3.fromRGB(32, 32, 32)
-	OpenBtn.BackgroundTransparency = 1
-	OpenBtn.TextTransparency = 1
-	OpenBtn.Position = UDim2.new(0.92098093, 0, 0.953206301, 0)
-	OpenBtn.Size = UDim2.new(0, 80, 0, 20)
-	OpenBtn.Font = Enum.Font.SourceSans
-	OpenBtn.Text = "Open"
-	OpenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-	OpenBtn.TextSize = 14.000
-	OpenBtn.MouseButton1Click:Connect(function()
-		library:Open()
-	end)
-
-	UICorner.CornerRadius = UDim.new(0, 6)
-	UICorner.Parent = OpenBtn
 
 	local _Gui = {};
 

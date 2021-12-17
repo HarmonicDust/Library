@@ -874,7 +874,7 @@ function library:Create(Name)
 			end
 
 			Value.Text = tostring(math.floor(Slide)).."/"..Maximum
-			Funcs.CallCurentValue = function()
+			Funcs.CallCurrentValue = function()
 				Callback(math.floor(Slide))
 			end
 			return Funcs

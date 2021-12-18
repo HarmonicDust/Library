@@ -1,7 +1,6 @@
 --[[
 Written for Mikee :)
-Slider Positions are not 100% accurate, the higher the max is, the lower the position is, i'm going to see if there is a way to fix this,
-until then the only fix is by setting the default position to be just a bit higher (or a lot, depending on the amount the max is)
+Keybinds skidded from vyn
 ]]
 
 local function dragify(Frame)
@@ -188,11 +187,11 @@ function library:Create(Name)
 
 	local ts = game:GetService("TweenService")
 
-    function library:isLibraryOpen()
-        if FirstBorder.BackgroundTransparency ~= 0 then
-            return false; else return true
-        end
-    end
+	function library:isLibraryOpen()
+		if FirstBorder.BackgroundTransparency ~= 0 then
+			return false; else return true
+		end
+	end
 
 	function library:Open()
 
@@ -508,6 +507,103 @@ function library:Create(Name)
 			return Funcs
 		end
 
+		function _Tabs:CreateKeybind(Name, Default, Callback)
+			--skidded from vyn
+
+			Name = Name or "Keybind"
+			assert(Default, "No default keybind passed")
+			Callback = Callback or function() print("Vynixu is sexy") end
+
+			local somin = {
+				Bind = Default
+			}
+
+			local Keybind = Instance.new("Frame")
+			local Text = Instance.new("TextLabel")
+			local UICorner = Instance.new("UICorner")
+			local __Bind = Instance.new("TextButton")
+			local UICorner_2 = Instance.new("UICorner")
+
+			Keybind.Name = "Keybind"
+			Keybind.Parent = ScrollingFrame_2
+			Keybind.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+			Keybind.Size = UDim2.new(0, 350, 0, 29)
+
+			Text.Name = "Text"
+			Text.Parent = Keybind
+			Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Text.BackgroundTransparency = 1.000
+			Text.Position = UDim2.new(0.0199999996, 0, 0, 0)
+			Text.Size = UDim2.new(0, 244, 0, 29)
+			Text.Font = Enum.Font.SourceSans
+			Text.Text = Name
+			Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Text.TextSize = 14.000
+			Text.TextXAlignment = Enum.TextXAlignment.Left
+
+			UICorner.CornerRadius = UDim.new(0, 4)
+			UICorner.Parent = Keybind
+
+			__Bind.Name = "Bind"
+			__Bind.Parent = Keybind
+			__Bind.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+			__Bind.Position = UDim2.new(0.736999989, 0, 0.207000002, 0)
+			__Bind.Size = UDim2.new(0, 81, 0, 18)
+			__Bind.Font = Enum.Font.SourceSansBold
+			__Bind.Text = "..."
+			__Bind.TextColor3 = Color3.fromRGB(255, 255, 255)
+			__Bind.TextSize = 14.000
+
+			UICorner_2.CornerRadius = UDim.new(0, 4)
+			UICorner_2.Parent = __Bind
+
+			-- Scripts:
+
+			local UIS = game:GetService("UserInputService")
+
+			local stuff = {}
+
+			function UpdateBox(new)
+				__Bind.Text = new
+			end
+
+			function somin:BindInput()
+				UpdateBox("...")
+
+				local Connection
+				Connection = UIS.InputBegan:Connect(function(input, processed)
+					if not processed and not tostring(input.UserInputType):find("Mouse") then
+						Connection:Disconnect()
+						somin:Set(input.KeyCode)
+					end
+				end)
+			end
+
+			function somin:Set(bind)
+				somin.Bind = bind
+				UpdateBox(bind.Name)
+			end
+
+			table.insert(stuff, Bind)
+			somin:Set(somin.Bind)
+
+			if not true then
+				UpdateBox(__Bind.Text)
+			end
+
+			UIS.InputBegan:Connect(function(input, processed)
+				if not processed and input.KeyCode == somin.Bind then
+					Callback()
+				end
+			end)
+
+			__Bind.InputBegan:Connect(function(input, processed)
+				if not processed and input.UserInputType == Enum.UserInputType.MouseButton1 then
+					somin:BindInput()
+				end
+			end)
+		end
+
 		function _Tabs:CreateToggle(Name, Activated, Callback)
 			Activated = Activated or false;
 
@@ -634,7 +730,7 @@ function library:Create(Name)
 			Minimum = Minimum or 0
 			Maximum = Maximum or 100
 			Default = Default or Minimum
-			
+
 			local Funcs = {}
 
 			local Slider = Instance.new("Frame")

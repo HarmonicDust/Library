@@ -49,7 +49,7 @@ tab:CreateTextFunction("Textfunction", "...", "50", true, function(textfunc) --g
 	workspace.Gravity = textfunc --alternatively you could just use a slider.
 end)
 
-tab:CreateKeybind("Keybind", Enum.KeyCode.E, function()
+tab:CreateKeybind("Keybind", Enum.KeyCode.E, function() --name, default keybind (required), callback
 	print("Keybind Pressed.")
 end)
 

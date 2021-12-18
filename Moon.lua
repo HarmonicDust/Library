@@ -992,6 +992,8 @@ function library:Create(Name)
 			_Placeholder = _Placeholder or ""
 			ClearOnFocus = ClearOnFocus or false
 
+            local Funcs = {}
+
 			local Textbox = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
 			local TextBox = Instance.new("TextBox")
@@ -1022,6 +1024,18 @@ function library:Create(Name)
 			TextBox.FocusLost:Connect(function()
 				Callback(TextBox.Text)
 			end)
+
+            Funcs.SetText = function(new)
+                TextBox.Text = new
+            end
+
+            Funcs.SetClearFocus = function(what)
+                TextBox.ClearTextOnFocus = what
+            end
+
+            Funcs.SetPlaceHolder = function(new)
+                TextBox.PlaceholderText = new
+            end
 		end
 
 		function _Tabs:CreateTextFunction(TextName, TextBoxPlaceholder, TextBoxText, ClearOnFocus, Callback)

@@ -45,8 +45,12 @@ tab:CreateTextBox("Textbox", "...", true, function(text) --Textbox is the text i
 	print(text)
 end)
 
-tab:CreateTextFunction("Gravity", "...", "50", true, function(textfunc) --gravity is the text function's name, ... is the placeholder for textbox, 50 is the textbox's text, true is if it clears when clicked.
+tab:CreateTextFunction("Textfunction", "...", "50", true, function(textfunc) --gravity is the text function's name, ... is the placeholder for textbox, 50 is the textbox's text, true is if it clears when clicked.
 	workspace.Gravity = textfunc --alternatively you could just use a slider.
+end)
+
+tab:CreateKeybind("Keybind", Enum.KeyCode.E, function()
+	print("Keybind Pressed.")
 end)
 
 UIS.InputBegan:connect(function(input,gameProcessed)

@@ -987,31 +987,42 @@ function library:Create(Name)
 			Expander.ZIndex = 0
 		end
 
-		function _Tabs:CreateTextBox(__Text, _Placeholder, ClearOnFocus, Callback)
+        function _Tabs:CreateTextBox(__Text, _Placeholder, ClearOnFocus, Callback)
 			__Text = __Text or ""
 			_Placeholder = _Placeholder or ""
 			ClearOnFocus = ClearOnFocus or false
 
-			local _Text = Instance.new("TextBox")
+			local Textbox = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
+			local TextBox = Instance.new("TextBox")
 
-			_Text.Name = "Text"
-			_Text.Parent = ScrollingFrame_2
-			_Text.BackgroundColor3 = Color3.fromRGB(35,35,35)
-			_Text.Size = UDim2.new(0, 350, 0, 29)
-			_Text.Font = Enum.Font.SourceSansBold
-			_Text.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
-			_Text.ClearTextOnFocus = ClearOnFocus
-			_Text.PlaceholderText = _Placeholder
-			_Text.Text = __Text
-			_Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-			_Text.TextSize = 14.000
-			_Text.FocusLost:Connect(function()
-				Callback(_Text.Text)
-			end)
+			--Properties:
+
+			Textbox.Name = "Textbox"
+			Textbox.Parent = ScrollingFrame_2
+			Textbox.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+			Textbox.Size = UDim2.new(0, 350, 0, 29)
 
 			UICorner.CornerRadius = UDim.new(0, 4)
-			UICorner.Parent = _Text
+			UICorner.Parent = Textbox
+
+			TextBox.Parent = Textbox
+			TextBox.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+			TextBox.BackgroundTransparency = 1.000
+			TextBox.Position = UDim2.new(0.0199999996, 0, 0, 0)
+			TextBox.Size = UDim2.new(0, 340, 0, 29)
+			TextBox.Font = Enum.Font.SourceSansBold
+			TextBox.PlaceholderColor3 = Color3.fromRGB(205, 205, 205)
+			TextBox.PlaceholderText = _Placeholder
+			TextBox.Text = __Text
+			TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TextBox.TextSize = 14.000
+			TextBox.TextWrapped = true
+			TextBox.ClearTextOnFocus = ClearOnFocus
+			TextBox.TextXAlignment = Enum.TextXAlignment.Left
+			TextBox.FocusLost:Connect(function()
+				Callback(TextBox.Text)
+			end)
 		end
 
 		function _Tabs:CreateTextFunction(TextName, TextBoxPlaceholder, TextBoxText, ClearOnFocus, Callback)

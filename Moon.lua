@@ -3,6 +3,10 @@ Written for Mikee :)
 Keybinds skidded from vyn
 ]]
 
+getgenv().colors = getgenv().colors or {}
+getgenv().colors.toggle_on = getgenv().colors.toggle_on or Color3.fromRGB(0, 200, 255)
+getgenv().colors.toggle_off = getgenv().colors.toggle_off or Color3.fromRGB(65, 65, 65)
+
 local function dragify(Frame)
 	local dragToggle = nil
 	local dragSpeed = .25
@@ -634,7 +638,7 @@ function library:Create(Name)
 				State = not State
 				Callback(State)
 				if State == true then
-					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(0, 200, 255)}):Play()
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_on}):Play()
 					local c = Sample_2:Clone()
 					c.Parent = Toggle
 					local x, y = (game.Players.LocalPlayer:GetMouse().X - c.AbsolutePosition.X), (game.Players.LocalPlayer:GetMouse().Y - c.AbsolutePosition.Y)
@@ -652,7 +656,7 @@ function library:Create(Name)
 					end
 					c:Destroy()
 				else
-					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(65, 65, 65)}):Play()
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_off}):Play()
 					local c = Sample_2:Clone()
 					c.Parent = Toggle
 					local x, y = (game.Players.LocalPlayer:GetMouse().X - c.AbsolutePosition.X), (game.Players.LocalPlayer:GetMouse().Y - c.AbsolutePosition.Y)
@@ -696,9 +700,9 @@ function library:Create(Name)
 			Checked.Name = "Checked"
 			Checked.Parent = Toggle
 			if State == false then
-				Checked.BackgroundColor3 = Color3.fromRGB(65, 65, 65)
+				Checked.BackgroundColor3 = getgenv().colors.toggle_off
 			else
-				Checked.BackgroundColor3 = Color3.fromRGB(0, 200, 255)
+				Checked.BackgroundColor3 = getgenv().colors.toggle_on
 			end
 
 			Funcs.SetToggle = function(Bool)
@@ -707,9 +711,9 @@ function library:Create(Name)
 				State = Bool
 				Callback(State)
 				if State then
-					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(0, 200, 255)}):Play()
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_on}):Play()
 				else
-					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = Color3.fromRGB(65, 65, 65)}):Play()
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_off}):Play()
 				end
 			end
 

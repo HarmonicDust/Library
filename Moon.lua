@@ -1007,7 +1007,6 @@ function library:Create(Name)
 			UICorner.Parent = Textbox
 
 			TextBox.Parent = Textbox
-			TextBox.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 			TextBox.BackgroundTransparency = 1.000
 			TextBox.Position = UDim2.new(0.0199999996, 0, 0, 0)
 			TextBox.Size = UDim2.new(0, 340, 0, 29)

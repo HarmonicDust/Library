@@ -1,51 +1,3 @@
---[[
-Written for Mikee :)
-Keybinds skidded from vyn
-]]
-
-getgenv().colors = getgenv().colors or {}
-getgenv().colors.toggle_on = getgenv().colors.toggle_on or Color3.fromRGB(0, 200, 255)
-getgenv().colors.toggle_off = getgenv().colors.toggle_off or Color3.fromRGB(65, 65, 65)
-
-local function dragify(Frame)
-	local dragToggle = nil
-	local dragSpeed = .25
-	local dragInput = nil
-	local dragStart = nil
-	local dragPos = nil
-	local startPos = nil
-
-	local function updateInput(input)
-		local Delta = input.Position - dragStart
-		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
-		game:GetService("TweenService"):Create(Frame, TweenInfo.new(.25), {Position = Position}):Play()
-	end
-
-	Frame.InputBegan:Connect(function(input)
-		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
-			dragToggle = true
-			dragStart = input.Position
-			startPos = Frame.Position
-			input.Changed:Connect(function()
-				if (input.UserInputState == Enum.UserInputState.End) then
-					dragToggle = false
-				end
-			end)
-		end
-	end)
-
-	Frame.InputChanged:Connect(function(input)
-		if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-			dragInput = input
-		end
-	end)
-
-	game:GetService("UserInputService").InputChanged:Connect(function(input)
-		if (input == dragInput and dragToggle) then
-			updateInput(input)
-		end
-	end)
-end
 
 local library = {};
 
@@ -1101,6 +1053,7 @@ function library:Create(Name)
 			local TextLabel_3 = Instance.new("TextLabel")
 			local arrow_drop_down = Instance.new("ImageLabel")
 			local DropdownContent = Instance.new("Frame")
+			local UIListLayout_3 = Instance.new("UIListLayout")
 
 
 			Dropdown.Name = "Dropdown"
@@ -1147,12 +1100,17 @@ function library:Create(Name)
 			DropdownContent.Position = UDim2.new(0, 0, 0, 34)
 			DropdownContent.Size = UDim2.new(1, 0, 0, 0)
 			DropdownContent.ZIndex = ZIndex
+			
+			UIListLayout_3.Parent = DropdownContent
+			UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
+			UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+			UIListLayout_3.Padding = UDim.new(0, 15)
 
 			Dropdown.MouseButton1Click:Connect(function()
 				local tween = game:GetService("TweenService")
 				if DropdownContent.Size == UDim2.new(1,0,0,0) then    
 					local sizenew = #DropdownContent:GetChildren()
-					local tweenp = tween:Create(DropdownContent,TweenInfo.new(.65,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Size = UDim2.new(1,0,0,1000)})
+					local tweenp = tween:Create(DropdownContent,TweenInfo.new(.65,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Size = UDim2.new(1,0,100000,0)})
 					local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(.45,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Rotation = 180})
 					tweenp2:Play()
 					tweenp:Play()
@@ -1170,7 +1128,6 @@ function library:Create(Name)
 				local DropdownBottom = Instance.new("Frame")
 				local UICorner_11 = Instance.new("UICorner")
 				local DropdownButton = Instance.new("TextButton")
-				local UIListLayout_3 = Instance.new("UIListLayout")
 				local TextLabel_4 = Instance.new("TextLabel")
 				local Sample_3 = Instance.new("ImageLabel")
 
@@ -1204,11 +1161,6 @@ function library:Create(Name)
 				DropdownButton.Text = ""
 				DropdownButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 				DropdownButton.TextSize = 14.000
-
-				UIListLayout_3.Parent = DropdownContent
-				UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
-				UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
-				UIListLayout_3.Padding = UDim.new(0, 15)
 
 				TextLabel_4.Parent = DropdownButton
 				TextLabel_4.BackgroundColor3 = Color3.fromRGB(255, 255, 255)

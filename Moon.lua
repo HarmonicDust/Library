@@ -201,7 +201,6 @@ function library:Create(Name)
 	end
 
 	function library:Open()
-
 		local visibility = true
 		local shit = {"Frame", "ScrollingFrame"}
 		local shit2 = {"TextLabel", "TextBox"}
@@ -261,16 +260,7 @@ function library:Create(Name)
 		end
 	end
 
-	function library:Close(OpenVisible)
-		--[[OpenVisible = OpenVisible or true
-		if OpenVisible then
-			local btn = game.Players.LocalPlayer.PlayerGui:WaitForChild("Open")
-			local a = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {BackgroundTransparency = 0})
-			local b = ts:Create(btn.OpenBtn, TweenInfo.new(0.5), {TextTransparency = 0})
-			a:Play()
-			b:Play()
-		end]]--
-
+	function library:Close()
 		local visibility = false
 		local shit = {"Frame", "ScrollingFrame"}
 		local shit2 = {"TextLabel", "TextBox"}

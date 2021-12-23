@@ -220,7 +220,7 @@ function library:Create(Name)
 			elseif table.find(shit2, v.ClassName) then
 				if visibility == true then
 					local tween = ts:Create(v, TweenInfo.new(0.5), {TextTransparency = 0})
-					if v.BackgroundColor3 ~= Color3.fromRGB(255, 255, 255) then
+					if v.BackgroundColor3 ~= Color3.fromRGB(255, 255, 255) and v.Name ~= "LibraryTextbox" then
 						local tween2 = ts:Create(v, TweenInfo.new(0.5), {BackgroundTransparency = 0})
 						tween2:Play()
 					else
@@ -510,7 +510,104 @@ function library:Create(Name)
 			end)
 			return Funcs
 		end
-		
+
+		function _Tabs:CreateKeybind(Name, Default, Callback)
+			--skidded from vyn
+
+			Name = Name or "Keybind"
+			assert(Default, "No default keybind passed")
+			Callback = Callback or function() print("Vynixu is sexy") end
+
+			local somin = {
+				Bind = Default
+			}
+
+			local Keybind = Instance.new("Frame")
+			local Text = Instance.new("TextLabel")
+			local UICorner = Instance.new("UICorner")
+			local __Bind = Instance.new("TextButton")
+			local UICorner_2 = Instance.new("UICorner")
+
+			Keybind.Name = "Keybind"
+			Keybind.Parent = ScrollingFrame_2
+			Keybind.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+			Keybind.Size = UDim2.new(0, 350, 0, 29)
+
+			Text.Name = "Text"
+			Text.Parent = Keybind
+			Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Text.BackgroundTransparency = 1.000
+			Text.Position = UDim2.new(0.0199999996, 0, 0, 0)
+			Text.Size = UDim2.new(0, 244, 0, 29)
+			Text.Font = Enum.Font.SourceSans
+			Text.Text = Name
+			Text.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Text.TextSize = 14.000
+			Text.TextXAlignment = Enum.TextXAlignment.Left
+
+			UICorner.CornerRadius = UDim.new(0, 4)
+			UICorner.Parent = Keybind
+
+			__Bind.Name = "Bind"
+			__Bind.Parent = Keybind
+			__Bind.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+			__Bind.Position = UDim2.new(0.736999989, 0, 0.207000002, 0)
+			__Bind.Size = UDim2.new(0, 81, 0, 18)
+			__Bind.Font = Enum.Font.SourceSansBold
+			__Bind.Text = "..."
+			__Bind.TextColor3 = Color3.fromRGB(255, 255, 255)
+			__Bind.TextSize = 14.000
+
+			UICorner_2.CornerRadius = UDim.new(0, 4)
+			UICorner_2.Parent = __Bind
+
+			-- Scripts:
+
+			local UIS = game:GetService("UserInputService")
+
+			local stuff = {}
+
+			function UpdateBox(new)
+				__Bind.Text = new
+			end
+
+			function somin:BindInput()
+				UpdateBox("...")
+
+				local Connection
+				Connection = UIS.InputBegan:Connect(function(input, processed)
+					if not processed and not tostring(input.UserInputType):find("Mouse") then
+						Connection:Disconnect()
+						somin:Set(input.KeyCode)
+					end
+				end)
+			end
+
+			function somin:Set(bind)
+				somin.Bind = bind
+				UpdateBox(bind.Name)
+			end
+
+			table.insert(stuff, Bind)
+			somin:Set(somin.Bind)
+
+			if not true then
+				UpdateBox(__Bind.Text)
+			end
+
+			UIS.InputBegan:Connect(function(input, processed)
+				if not processed and input.KeyCode == somin.Bind then
+					Callback()
+				end
+			end)
+
+			__Bind.InputBegan:Connect(function(input, processed)
+				if not processed and input.UserInputType == Enum.UserInputType.MouseButton1 then
+					somin:BindInput()
+				end
+			end)
+		end
+
 		function _Tabs:CreateToggle(Name, Activated, Callback)
 			Activated = Activated or false;
 
@@ -630,103 +727,6 @@ function library:Create(Name)
 			UICorner_9.CornerRadius = UDim.new(0, 4)
 			UICorner_9.Parent = Checked
 			return Funcs
-		end
-
-		function _Tabs:CreateKeybind(Name, Default, Callback)
-			--skidded from vyn
-
-			Name = Name or "Keybind"
-			assert(Default, "No default keybind passed")
-			Callback = Callback or function() print("Vynixu is sexy") end
-
-			local somin = {
-				Bind = Default
-			}
-
-			local Keybind = Instance.new("Frame")
-			local Text = Instance.new("TextLabel")
-			local UICorner = Instance.new("UICorner")
-			local __Bind = Instance.new("TextButton")
-			local UICorner_2 = Instance.new("UICorner")
-
-			Keybind.Name = "Keybind"
-			Keybind.Parent = ScrollingFrame_2
-			Keybind.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
-			Keybind.Size = UDim2.new(0, 350, 0, 29)
-
-			Text.Name = "Text"
-			Text.Parent = Keybind
-			Text.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-			Text.BackgroundTransparency = 1.000
-			Text.Position = UDim2.new(0.0199999996, 0, 0, 0)
-			Text.Size = UDim2.new(0, 244, 0, 29)
-			Text.Font = Enum.Font.SourceSans
-			Text.Text = Name
-			Text.TextColor3 = Color3.fromRGB(255, 255, 255)
-			Text.TextSize = 14.000
-			Text.TextXAlignment = Enum.TextXAlignment.Left
-
-			UICorner.CornerRadius = UDim.new(0, 4)
-			UICorner.Parent = Keybind
-
-			__Bind.Name = "Bind"
-			__Bind.Parent = Keybind
-			__Bind.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
-			__Bind.Position = UDim2.new(0.736999989, 0, 0.207000002, 0)
-			__Bind.Size = UDim2.new(0, 81, 0, 18)
-			__Bind.Font = Enum.Font.SourceSansBold
-			__Bind.Text = "..."
-			__Bind.TextColor3 = Color3.fromRGB(255, 255, 255)
-			__Bind.TextSize = 14.000
-
-			UICorner_2.CornerRadius = UDim.new(0, 4)
-			UICorner_2.Parent = __Bind
-
-			-- Scripts:
-
-			local UIS = game:GetService("UserInputService")
-
-			local stuff = {}
-
-			function UpdateBox(new)
-				__Bind.Text = new
-			end
-
-			function somin:BindInput()
-				UpdateBox("...")
-
-				local Connection
-				Connection = UIS.InputBegan:Connect(function(input, processed)
-					if not processed and not tostring(input.UserInputType):find("Mouse") then
-						Connection:Disconnect()
-						somin:Set(input.KeyCode)
-					end
-				end)
-			end
-
-			function somin:Set(bind)
-				somin.Bind = bind
-				UpdateBox(bind.Name)
-			end
-
-			table.insert(stuff, Bind)
-			somin:Set(somin.Bind)
-
-			if not true then
-				UpdateBox(__Bind.Text)
-			end
-
-			UIS.InputBegan:Connect(function(input, processed)
-				if not processed and input.KeyCode == somin.Bind then
-					Callback()
-				end
-			end)
-
-			__Bind.InputBegan:Connect(function(input, processed)
-				if not processed and input.UserInputType == Enum.UserInputType.MouseButton1 then
-					somin:BindInput()
-				end
-			end)
 		end
 
 		function _Tabs:CreateSlider(_Name, Minimum, Maximum, Default, Callback)
@@ -1009,8 +1009,8 @@ function library:Create(Name)
 			UICorner.Parent = Textbox
 
 			TextBox.Parent = Textbox
+			TextBox.Name = "LibraryTextbox"
 			TextBox.BackgroundTransparency = 1.000
-			TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			TextBox.Position = UDim2.new(0.0199999996, 0, 0, 0)
 			TextBox.Size = UDim2.new(0, 340, 0, 29)
 			TextBox.Font = Enum.Font.SourceSansBold

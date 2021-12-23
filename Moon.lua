@@ -5,11 +5,11 @@
 
 --TheProxide#3240 i think
 --Written for mike and proxide (lol)
---[[
+
 getgenv().colors = getgenv().colors or {}
 getgenv().colors.toggle_on = getgenv().colors.toggle_on or Color3.fromRGB(0, 200, 255)
 getgenv().colors.toggle_off = getgenv().colors.toggle_off or Color3.fromRGB(65, 65, 65)
-]]
+
 local function dragify(Frame)
 	local dragToggle = nil
 	local dragSpeed = .25
@@ -508,6 +508,127 @@ function library:Create(Name)
 					c:Destroy()
 				end)
 			end)
+			return Funcs
+		end
+		
+		function _Tabs:CreateToggle(Name, Activated, Callback)
+			Activated = Activated or false;
+
+			local Funcs = {}
+
+			local Toggle = Instance.new("TextButton")
+			local UICorner_8 = Instance.new("UICorner")
+			local TextLabel_2 = Instance.new("TextLabel")
+			local Sample_2 = Instance.new("ImageLabel")
+			local Checked = Instance.new("Frame")
+			local UICorner_9 = Instance.new("UICorner")
+
+			Toggle.Name = "Toggle"
+			Toggle.Parent = ScrollingFrame_2
+			Toggle.BackgroundColor3 = Color3.fromRGB(33, 33, 33)
+			Toggle.ClipsDescendants = true
+			Toggle.Position = UDim2.new(0.0244565215, 0, 0.111607142, 0)
+			Toggle.Size = UDim2.new(0, 350, 0, 29)
+			Toggle.Font = Enum.Font.SourceSans
+			Toggle.Text = ""
+			Toggle.TextColor3 = Color3.fromRGB(0, 0, 0)
+			Toggle.TextSize = 14.000
+
+			local State = Activated
+			local tween = game:GetService("TweenService")
+
+			Toggle.MouseButton1Click:Connect(function()
+				State = not State
+				Callback(State)
+				if State == true then
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_on}):Play()
+					local c = Sample_2:Clone()
+					c.Parent = Toggle
+					local x, y = (game.Players.LocalPlayer:GetMouse().X - c.AbsolutePosition.X), (game.Players.LocalPlayer:GetMouse().Y - c.AbsolutePosition.Y)
+					c.Position = UDim2.new(0, x, 0, y)
+					local len, size = 0.35, nil
+					if Toggle.AbsoluteSize.X >= Toggle.AbsoluteSize.Y then
+						size = (Toggle.AbsoluteSize.X * 1.5)
+					else
+						size = (Toggle.AbsoluteSize.Y * 1.5)
+					end
+					c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+					for i = 1, 10 do
+						c.ImageTransparency = c.ImageTransparency + 0.05
+						wait(len / 12)
+					end
+					c:Destroy()
+				else
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_off}):Play()
+					local c = Sample_2:Clone()
+					c.Parent = Toggle
+					local x, y = (game.Players.LocalPlayer:GetMouse().X - c.AbsolutePosition.X), (game.Players.LocalPlayer:GetMouse().Y - c.AbsolutePosition.Y)
+					c.Position = UDim2.new(0, x, 0, y)
+					local len, size = 0.35, nil
+					if Toggle.AbsoluteSize.X >= Toggle.AbsoluteSize.Y then
+						size = (Toggle.AbsoluteSize.X * 1.5)
+					else
+						size = (Toggle.AbsoluteSize.Y * 1.5)
+					end
+					c:TweenSizeAndPosition(UDim2.new(0, size, 0, size), UDim2.new(0.5, (-size / 2), 0.5, (-size / 2)), 'Out', 'Quad', len, true, nil)
+					for i = 1, 10 do
+						c.ImageTransparency = c.ImageTransparency + 0.05
+						wait(len / 12)
+					end
+					c:Destroy()
+				end
+			end)
+
+			UICorner_8.CornerRadius = UDim.new(0, 4)
+			UICorner_8.Parent = Toggle
+
+			TextLabel_2.Parent = Toggle
+			TextLabel_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			TextLabel_2.BackgroundTransparency = 1.000
+			TextLabel_2.Position = UDim2.new(0.0199999996, 0, 0, 0)
+			TextLabel_2.Size = UDim2.new(0, 307, 0, 29)
+			TextLabel_2.Font = Enum.Font.SourceSans
+			TextLabel_2.Text = Name
+			TextLabel_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+			TextLabel_2.TextSize = 14.000
+			TextLabel_2.TextXAlignment = Enum.TextXAlignment.Left
+
+			Sample_2.Name = "Sample"
+			Sample_2.Parent = Toggle
+			Sample_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Sample_2.BackgroundTransparency = 1.000
+			Sample_2.Image = "http://www.roblox.com/asset/?id=4560909609"
+			Sample_2.ImageTransparency = 0.600
+
+			Checked.Name = "Checked"
+			Checked.Parent = Toggle
+			if State == false then
+				Checked.BackgroundColor3 = getgenv().colors.toggle_off
+			else
+				Checked.BackgroundColor3 = getgenv().colors.toggle_on
+			end
+
+			Funcs.SetToggle = function(Bool)
+				assert(Bool ~= nil, "No parameters passed")
+
+				State = Bool
+				Callback(State)
+				if State then
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_on}):Play()
+				else
+					tween:Create(Checked,TweenInfo.new(.2,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{BackgroundColor3 = getgenv().colors.toggle_off}):Play()
+				end
+			end
+
+			Funcs.IsEnabled = function()
+				return State
+			end
+
+			Checked.Position = UDim2.new(0.916999996, 0, 0.207000002, 0)
+			Checked.Size = UDim2.new(0, 18, 0, 18)
+
+			UICorner_9.CornerRadius = UDim.new(0, 4)
+			UICorner_9.Parent = Checked
 			return Funcs
 		end
 

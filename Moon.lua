@@ -1,6 +1,11 @@
 --[[New:
-	Fixed dropdowns cutting off (they still do, but they do it when the "DropdownContent"'s scale reaches above 100000, which is pretty much impossible unless you got 100000000+ items in one dropdown for some pointless lmao)
-	Fixed additional lag coming from library due to UI list layouts being replicated when using AddButton function from dropdowns (oops)
+	i forgor the date :skull:
+		Fixed dropdowns cutting off (they still do, but they do it when the "DropdownContent"'s scale reaches above 100000, which is pretty much impossible unless you got 100000000+ items in one dropdown for some pointless lmao)
+		Fixed additional lag coming from library due to UI list layouts being replicated when using AddButton function from dropdowns (oops)
+
+	12.31.2021: Happy new year :)
+
+		Update - Fixed dropdowns dropping content fast
 ]]
 
 --TheProxide#3240 i think
@@ -1159,13 +1164,13 @@ function library:Create(Name)
 				local tween = game:GetService("TweenService")
 				if DropdownContent.Size == UDim2.new(1,0,0,0) then    
 					local sizenew = #DropdownContent:GetChildren()
-					local tweenp = tween:Create(DropdownContent,TweenInfo.new(.65,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Size = UDim2.new(1,0,100000,0)})
-					local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(.45,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Rotation = 180})
+					local tweenp = tween:Create(DropdownContent,TweenInfo.new(0.89,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Size = UDim2.new(1,0,100000,0)})
+					local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(0.45,Enum.EasingStyle.Quart,Enum.EasingDirection.In),{Rotation = 180})
 					tweenp2:Play()
 					tweenp:Play()
 				else
-					local tweenp = tween:Create(DropdownContent,TweenInfo.new(.5,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Size = UDim2.new(1,0,0,0)})
-					local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(.45,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Rotation = 0})
+					local tweenp = tween:Create(DropdownContent,TweenInfo.new(0.45,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Size = UDim2.new(1,0,0,0)})
+					local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(1,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Rotation = 0})
 					tweenp2:Play()
 					tweenp:Play()
 				end   
@@ -1236,8 +1241,8 @@ function library:Create(Name)
 
 					local tween = game:GetService("TweenService")
 					if ClosesWhenClicked then    
-						local tweenp = tween:Create(DropdownContent,TweenInfo.new(.5,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Size = UDim2.new(1,0,0,0)})
-						local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(.45,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Rotation = 0})
+						local tweenp = tween:Create(DropdownContent,TweenInfo.new(0.45,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Size = UDim2.new(1,0,0,0)})
+						local tweenp2 = tween:Create(arrow_drop_down,TweenInfo.new(1,Enum.EasingStyle.Quart,Enum.EasingDirection.Out),{Rotation = 0})
 						tweenp2:Play()
 						tweenp:Play()
 					else

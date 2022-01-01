@@ -13,12 +13,6 @@ task.wait() -- Prevent sliders when being loaded to error (if a player has walks
 
 local UIS = game:GetService("UserInputService")
 
-isChatting = function()
-	if UIS:GetFocusedTextBox() then
-		return true; else return false
-	end
-end
-
 local window = library:Create("Moon Library") --Name of the Gui
 
 local tab = window:CreateTab("First tab") --name of your tab
@@ -45,7 +39,7 @@ end)
 
 tab:CreateSlider("Slider", 0, 100, 50, function(amount) --name, min, max, default, callback
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = amount
-end).CallCurrentValue() --sets player's walkspeed to 50, because 50 is the default position and calls the slider's current value.
+end)--.CallCurrentValue() --sets player's walkspeed to 50, because 50 is the default position and calls the slider's current value.
 
 tab:CreateTextBox("Textbox", "...", true, function(text) --Textbox is the text it starts off when loaded, ... is the placeholder text, true is to clear the text when clicked.
 	print(text)
@@ -60,7 +54,7 @@ tab:CreateKeybind("Keybind", Enum.KeyCode.E, function() --name, default keybind 
 end)
 
 UIS.InputBegan:connect(function(input,gameProcessed)
-	if isChatting() == false then
+	if not UIS:GetFocusedTextBox() then
 		if input.KeyCode == Enum.KeyCode.G then --when G is pressed, it will enable/disable the toggle
 			tog.SetToggle(not tog.IsEnabled())
 		elseif input.KeyCode == Enum.KeyCode.H then --simply fires the button's function when H is clicked

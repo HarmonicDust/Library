@@ -1,15 +1,4 @@
---[[New:
-	i forgor the date :skull:
-		Fixed dropdowns cutting off (they still do, but they do it when the "DropdownContent"'s scale reaches above 100000, which is pretty much impossible unless you got 100000000+ items in one dropdown for some pointless lmao)
-		Fixed additional lag coming from library due to UI list layouts being replicated when using AddButton function from dropdowns (oops)
-
-	12.31.2021: Happy new year :)
-
-		Update - Fixed dropdowns dropping content fast
-]]
-
---TheProxide#3240 i think
---Written for mike and proxide (lol)
+--v3 soon
 
 getgenv().colors = getgenv().colors or {}
 getgenv().colors.toggle_on = getgenv().colors.toggle_on or Color3.fromRGB(0, 200, 255)

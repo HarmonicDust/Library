@@ -43,7 +43,7 @@ moon.newmenu = function(menuname, config)
 	local TextLabel_3 = Instance.new("TextLabel")
 
 	Dropdown.Name = "Dropdown"
-	Dropdown.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	Dropdown.Parent = game:GetService("CoreGui")
 	Dropdown.Enabled = false
 
 	TextButton.Parent = Dropdown
@@ -241,7 +241,7 @@ moon.new = function(title)
 	--Properties:
 
 	MoonLibraryV3.Name = "MoonLibraryV3"
-	MoonLibraryV3.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	MoonLibraryV3.Parent = game:GetService("CoreGui")
 
 	moon.getui = function()
 		return MoonLibraryV3

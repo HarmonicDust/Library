@@ -1,8 +1,10 @@
---v3 soon
+--v3 is getting worked on
 
 getgenv().colors = getgenv().colors or {}
 getgenv().colors.toggle_on = getgenv().colors.toggle_on or Color3.fromRGB(0, 200, 255)
 getgenv().colors.toggle_off = getgenv().colors.toggle_off or Color3.fromRGB(65, 65, 65)
+
+print("V3 soon.")
 
 local function dragify(Frame)
 	local dragToggle = nil
@@ -506,8 +508,6 @@ function library:Create(Name)
 		end
 
 		function _Tabs:CreateKeybind(Name, Default, Callback)
-			--skidded from vyn
-
 			Name = Name or "Keybind"
 			assert(Default, "No default keybind passed")
 			Callback = Callback or function() print("Vynixu is sexy") end

@@ -45,6 +45,7 @@ moon.newmenu = function(menuname, config)
 	Dropdown.Name = "Dropdown"
 	Dropdown.Parent = game:GetService("CoreGui")
 	Dropdown.Enabled = false
+	Dropdown.IgnoreGuiInset = true
 
 	TextButton.Parent = Dropdown
 	TextButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)

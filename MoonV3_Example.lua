@@ -9,7 +9,7 @@ moon.colors = { --customization; as of now toggles are the only item supported b
 	}
 }
 
-local main = moon.new("Moon Library V3") --name of the ui
+local main = moon.new("Moon Library V3", {close_tab_onclick = true}) --name of the ui
 
 print("Path: "..moon.getui():GetFullName()) --really a misc feature, doesn't have much use
 
@@ -28,6 +28,7 @@ end)
 
 --creating tabs
 local tab1 = main.tab("Tab")
+local tab2 = main.tab("Tab 2")
 
 local section1 = tab1.section("Section 1", {opened = true})
 local section2 = tab1.section("Section 2", {opened = true})
@@ -47,7 +48,8 @@ section2.button("Dropdown loader", {
 	image = moon.images.dropdown.image, --gets dropdown image from moon.images
 	imagecolor = Color3.fromRGB(145, 145, 145), --color
 	imagerectsize = moon.images.dropdown.imagerectsize, --this is for the dropdown's image rect size
-	imagerectoffset = moon.images.dropdown.imagerectoffset}, function()
+	imagerectoffset = moon.images.dropdown.imagerectoffset, --dropdown's image offset
+	desc = "Loads a dropdown variable"}, function() --this is a description, a long with the callback
 		menu.load() --loads the menu upon a click (p.s. to exit a menu, click away from it; on the background)
 end)
 

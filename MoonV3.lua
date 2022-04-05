@@ -1,5 +1,4 @@
---Made by Proxide and Vynixu
---Library isn't complete, there will be more stuff to come
+--up next: sliders.
 
 local moon = {}
 --Library
@@ -43,7 +42,8 @@ moon.newmenu = function(menuname, config)
 	local TextLabel_3 = Instance.new("TextLabel")
 
 	Dropdown.Name = "Dropdown"
-	Dropdown.Parent = game:GetService("CoreGui")
+	Dropdown.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	Dropdown.IgnoreGuiInset = true
 	Dropdown.Enabled = false
 
 	TextButton.Parent = Dropdown
@@ -212,10 +212,12 @@ end
 
 moon.newdropdown = moon.newmenu
 
-moon.new = function(title)
+moon.new = function(title, config)
 	title = title or "Moon Library"
+	config = config or {}
+	
 	title = "<b>"..title.."</b>"
-
+	config.close_tab_onclick = config.close_tab_onclick or true
 	local tabs = {}
 
 	local MoonLibraryV3 = Instance.new("ScreenGui")
@@ -241,7 +243,7 @@ moon.new = function(title)
 	--Properties:
 
 	MoonLibraryV3.Name = "MoonLibraryV3"
-	MoonLibraryV3.Parent = game:GetService("CoreGui")
+	MoonLibraryV3.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 	moon.getui = function()
 		return MoonLibraryV3
@@ -477,7 +479,7 @@ moon.new = function(title)
 
 				local binder = {}
 
-				set = function(new)
+				local set = function(new)
 					Bind.Text = new
 				end
 
@@ -528,7 +530,7 @@ moon.new = function(title)
 				config.imagerectoffset = config.imagerectoffset or Vector2.new(0, 0)
 				config.imagerectsize = config.imagerectsize or Vector2.new(0, 0)
 				config.imagecolor = config.imagecolor or Color3.fromRGB(255, 255, 255)
-
+				config.desc = config.desc or ""
 				local btn = {}
 				
 				btn.callback = function()
@@ -585,6 +587,47 @@ moon.new = function(title)
 				ImageLabel.ImageRectOffset = config.imagerectoffset
 				ImageLabel.ImageRectSize = config.imagerectsize
 				ImageLabel.ImageColor3 = config.imagecolor
+				
+				if config.desc == "" then
+					return
+				else
+
+					local Desc = Instance.new("TextLabel")
+					local UICorner2 = Instance.new("UICorner")
+
+					Desc.Name = "Desc"
+					Desc.Parent = Button
+					Desc.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+					Desc.Position = UDim2.new(0.222904906, 0, 0, 0)
+					Desc.Size = UDim2.new(0, 288, 0, 26)
+					Desc.Visible = false
+					Desc.ZIndex = 2
+					Desc.Font = Enum.Font.SourceSansBold
+					Desc.Text = config.desc
+					Desc.TextColor3 = Color3.fromRGB(255, 255, 255)
+					Desc.TextSize = 11.000
+					Desc.TextWrapped = true
+
+					UICorner2.CornerRadius = UDim.new(0, 4)
+					UICorner2.Parent = Desc
+
+					Button.MouseMoved:Connect(function(x, y)
+						local offset = Vector2.new(math.abs(x - Button.AbsolutePosition.X + 18), math.abs(y - Button.AbsolutePosition.Y - 36))--UDim2.new(0, x, 0, y)
+						Desc.Position = UDim2.new(0, offset.X, 0, offset.Y)
+					end)
+
+					Button.MouseLeave:Connect(function()
+						Desc.Visible = false
+					end)
+
+					Button.MouseEnter:Connect(function()
+						Desc.Visible = true
+					end)
+
+					Desc:GetPropertyChangedSignal("TextBounds"):Connect(function()
+						Desc.Size = UDim2.new(0,(Desc.TextBounds.X + 6), 0,(Desc.TextBounds.Y + 6))
+					end)
+				end
 				return btn
 			end
 
@@ -875,28 +918,33 @@ moon.new = function(title)
 		for i, v in next, tabbtns:GetChildren() do
 			if v.ClassName == "TextButton" then
 				v.MouseButton1Click:Connect(function()
+					if config.close_tab_onclick then
+						game:GetService('TweenService'):Create(tabbtns.Parent, TweenInfo.new(0.5), {Size = UDim2.new(0, 0, 1, 0)}):Play()
+						script.Parent.Parent.Parent.Black.Visible = false
+						script.Parent.Parent.Parent.Toolbar.Title.Visible = true
+					end
 					for _, k in next, tabsmain:GetChildren() do
 						if k.Name == v.TextLabel.Text then
-							k.Visible = true;
+							k.Visible = true
 							Title.Text = title.." - "..k.Name
 						else
-							k.Visible = false;
-						end;
-					end;
+							k.Visible = false
+						end
+					end
 					for _j, j in next, tabbtns:GetChildren() do
 						if j.ClassName == "TextButton" then
 							if j.Name ~= v.TextLabel.Text then
-								j.BackgroundColor3 = Color3.fromRGB(27, 27, 27);
-								j.TextColor3 = Color3.fromRGB(255, 255, 255);
+								j.BackgroundColor3 = Color3.fromRGB(27, 27, 27)
+								j.TextColor3 = Color3.fromRGB(255, 255, 255)
 							else
-								j.BackgroundColor3 = Color3.fromRGB(28, 28, 28);
-								j.TextColor3 = Color3.fromRGB(255, 255, 255);
-							end;
-						end;
-					end;
-				end);
-			end;
-		end;
+								j.BackgroundColor3 = Color3.fromRGB(28, 28, 28)
+								j.TextColor3 = Color3.fromRGB(255, 255, 255)
+							end
+						end
+					end
+				end)
+			end
+		end
 	end
 	coroutine.wrap(BAQKV_fake_script)()
 	local function THZU_fake_script() -- menu.LocalScript 

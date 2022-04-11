@@ -1,7 +1,9 @@
---up next: sliders.
-
 local moon = {}
---Library
+
+moon.protectgui = syn and syn.protect_gui or protectgui
+--ugly code lmao
+
+--init:
 moon.images = {
 	dropdown = {
 		image = "rbxassetid://3926305904",
@@ -28,6 +30,9 @@ moon.newmenu = function(menuname, config)
 	local menu = {}
 
 	local Dropdown = Instance.new("ScreenGui")
+	
+	moon.protectgui(Dropdown)
+	
 	local TextButton = Instance.new("TextButton")
 	local UIListLayout = Instance.new("UIListLayout")
 	local TextButton_2 = Instance.new("TextButton")
@@ -41,8 +46,8 @@ moon.newmenu = function(menuname, config)
 	local TextLabel_2 = Instance.new("TextLabel")
 	local TextLabel_3 = Instance.new("TextLabel")
 
-	Dropdown.Name = "Dropdown"
-	Dropdown.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	Dropdown.Name = menuname
+	Dropdown.Parent = game:GetService("CoreGui")
 	Dropdown.IgnoreGuiInset = true
 	Dropdown.Enabled = false
 
@@ -180,7 +185,7 @@ moon.newmenu = function(menuname, config)
 		Dropdown.Enabled = false
 	end)
 
-	local function NEZCGGA_fake_script() -- TextButton_2.LocalScript 
+	local function NEZCGGA_fake_script() 
 		local script = Instance.new('LocalScript', TextButton_2)
 
 		local items = script.Parent.Frame.ScrollingFrame
@@ -195,7 +200,6 @@ moon.newmenu = function(menuname, config)
 			if #options < 8 then
 				items.Parent.Size = UDim2.new(0, 259, 0, (items.UIListLayout.AbsoluteContentSize.Y + 6))
 				script.Parent.Size = UDim2.new(0, 282, 0, (items.Parent.Size.Y.Offset + 40))
-				--items.CanvasSize = UDim2.new(0, 0, 0, items.UIListLayout.AbsoluteContentSize)
 			else
 				items.CanvasSize = UDim2.new(0, 0, 0, (items.UIListLayout.AbsoluteContentSize.Y + 6))
 				items.Parent.Size = UDim2.new(0, 259, 0, 227)
@@ -221,6 +225,9 @@ moon.new = function(title, config)
 	local tabs = {}
 
 	local MoonLibraryV3 = Instance.new("ScreenGui")
+	
+	moon.protectgui(MoonLibraryV3)
+	
 	local Main = Instance.new("Frame")
 	local UICorner = Instance.new("UICorner")
 	local TabsBg = Instance.new("Frame")
@@ -240,10 +247,8 @@ moon.new = function(title, config)
 	local Black = Instance.new("Frame")
 	local UICorner_16 = Instance.new("UICorner")
 
-	--Properties:
-
-	MoonLibraryV3.Name = "MoonLibraryV3"
-	MoonLibraryV3.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	MoonLibraryV3.Name = title
+	MoonLibraryV3.Parent = game:GetService("CoreGui")
 
 	moon.getui = function()
 		return MoonLibraryV3
@@ -903,9 +908,7 @@ moon.new = function(title, config)
 	UICorner_16.CornerRadius = UDim.new(0, 5)
 	UICorner_16.Parent = Black
 
-	-- Scripts:
-
-	local function BAQKV_fake_script() -- ScrollingFrame.LocalScript 
+	local function BAQKV_fake_script()
 		local script = Instance.new('LocalScript', ScrollingFrame)
 
 		local tabbtns = script.Parent
@@ -947,10 +950,8 @@ moon.new = function(title, config)
 		end
 	end
 	coroutine.wrap(BAQKV_fake_script)()
-	local function THZU_fake_script() -- menu.LocalScript 
+	local function THZU_fake_script()
 		local script = Instance.new('LocalScript', menu)
-
-		--script.Parent.Position = UDim2.new(0, script.Parent.Parent.Section_Name.TextBounds.X + 7, 0, 3)
 
 		local IsOpen = false
 
@@ -969,7 +970,7 @@ moon.new = function(title, config)
 		end)
 	end
 	coroutine.wrap(THZU_fake_script)()
-	local function FDYOIHU_fake_script() -- Main.LocalScript 
+	local function FDYOIHU_fake_script()
 		local script = Instance.new('LocalScript', Main)
 
 		script.Parent.Draggable = true

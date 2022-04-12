@@ -1,7 +1,8 @@
+--ugly code lmao
+
 local moon = {}
 
 moon.protectgui = syn and syn.protect_gui or protectgui
---ugly code lmao
 
 --init:
 moon.images = {
@@ -734,7 +735,7 @@ moon.new = function(title, config)
 				return funcs
 			end
 
-			--[[items.colorpicker = function()
+			items.colorpicker = function(name, callback)
 				local ColorPicker = Instance.new("Frame")
 				local Name_4 = Instance.new("TextLabel")
 				local UICorner_10 = Instance.new("UICorner")
@@ -754,7 +755,7 @@ moon.new = function(title, config)
 				Name_4.Position = UDim2.new(0.0271377154, 0, 0, 0)
 				Name_4.Size = UDim2.new(0, 367, 0, 26)
 				Name_4.Font = Enum.Font.Gotham
-				Name_4.Text = "Color picker"
+				Name_4.Text = name
 				Name_4.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Name_4.TextSize = 11.000
 				Name_4.TextWrapped = true
@@ -763,9 +764,9 @@ moon.new = function(title, config)
 				UICorner_10.CornerRadius = UDim.new(0, 4)
 				UICorner_10.Parent = ColorPicker
 
-				Color.Name = "Bind"
+				Color.Name = "Color"
 				Color.Parent = ColorPicker
-				Color.BackgroundColor3 = Color3.fromRGB(131, 56, 216)
+				Color.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 				Color.Position = UDim2.new(0.891534388, 0, 0.115384616, 0)
 				Color.Size = UDim2.new(0, 40, 0, 20)
 				Color.AutoButtonColor = false
@@ -777,7 +778,213 @@ moon.new = function(title, config)
 
 				UICorner_11.CornerRadius = UDim.new(0, 4)
 				UICorner_11.Parent = Color
-			end]]-- soon :)
+
+				--Color Picker Main
+
+				local Top = Instance.new("Frame")
+				local UICorner = Instance.new("UICorner")
+				local Cover = Instance.new("Frame")
+				local Name = Instance.new("TextLabel")
+				local _ColorPicker = Instance.new("Frame")
+				local UICorner_2 = Instance.new("UICorner")
+				local ColorPicker_Main = Instance.new("ImageLabel")
+				local Marker = Instance.new("Frame")
+				local UICorner_3 = Instance.new("UICorner")
+				local UICorner_4 = Instance.new("UICorner")
+				local Brightness = Instance.new("ImageLabel")
+				local Marker_2 = Instance.new("Frame")
+				local UICorner_5 = Instance.new("UICorner")
+				local UICorner_6 = Instance.new("UICorner")
+				local Preview = Instance.new("Frame")
+				local UICorner_7 = Instance.new("UICorner")
+				local Apply = Instance.new("TextButton")
+				local UICorner_8 = Instance.new("UICorner")
+
+				--Properties:
+
+				Top.Name = name
+				Top.Parent = MoonLibraryV3
+				Top.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+				Top.BorderSizePixel = 0
+				Top.Position = UDim2.new(0.672195911, 0, 0.224622041, 0)
+				Top.Size = UDim2.new(0, 217, 0, 30)
+				Top.ZIndex = 2
+				Top.Visible = false
+				Top.Active = true
+				Top.Draggable = true
+
+				Color.MouseButton1Down:Connect(function()
+					Top.Visible = true
+				end)
+
+				UICorner.CornerRadius = UDim.new(0, 5)
+				UICorner.Parent = Top
+
+				Cover.Name = "Cover"
+				Cover.Parent = Top
+				Cover.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+				Cover.BorderSizePixel = 0
+				Cover.Position = UDim2.new(0, 0, 0.783333361, 0)
+				Cover.Size = UDim2.new(1, 0, -0.516666651, 22)
+				Cover.ZIndex = 2
+
+				Name.Name = "Name"
+				Name.Parent = Top
+				Name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Name.BackgroundTransparency = 1.000
+				Name.Position = UDim2.new(0.0512821898, 0, 0, 0)
+				Name.Size = UDim2.new(0, 205, 0, 30)
+				Name.ZIndex = 2
+				Name.Font = Enum.Font.SourceSans
+				Name.Text = "<b>" .. name .. "</b>"
+				Name.RichText = true
+				Name.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Name.TextSize = 14.000
+				Name.TextXAlignment = Enum.TextXAlignment.Left
+
+				_ColorPicker.Name = "_ColorPicker"
+				_ColorPicker.Parent = Top
+				_ColorPicker.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
+				_ColorPicker.Size = UDim2.new(0, 217, 0, 232)
+
+				UICorner_2.CornerRadius = UDim.new(0, 5)
+				UICorner_2.Parent = _ColorPicker
+
+				ColorPicker_Main.Name = "ColorPicker"
+				ColorPicker_Main.Parent = _ColorPicker
+				ColorPicker_Main.AnchorPoint = Vector2.new(0.5, 0)
+				ColorPicker_Main.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				ColorPicker_Main.BorderColor3 = Color3.fromRGB(40, 40, 40)
+				ColorPicker_Main.BorderSizePixel = 0
+				ColorPicker_Main.Position = UDim2.new(0.365355879, 0, 0.146547377, 0)
+				ColorPicker_Main.Size = UDim2.new(0.627424419, 0, 0.587000012, 0)
+				ColorPicker_Main.ZIndex = 4
+				ColorPicker_Main.Image = "rbxassetid://1433361550"
+				ColorPicker_Main.SliceCenter = Rect.new(10, 10, 90, 90)
+
+				Marker.Name = "Marker"
+				Marker.Parent = ColorPicker_Main
+				Marker.AnchorPoint = Vector2.new(0.5, 0.5)
+				Marker.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Marker.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Marker.BorderSizePixel = 0
+				Marker.Position = UDim2.new(0.5, 0, 0.5, 0)
+				Marker.Size = UDim2.new(0, 4, 0, 4)
+				Marker.ZIndex = 5
+
+				UICorner_3.Parent = Marker
+
+				UICorner_4.Parent = ColorPicker_Main
+
+				Brightness.Name = "Brightness"
+				Brightness.Parent = _ColorPicker
+				Brightness.AnchorPoint = Vector2.new(0.5, 0)
+				Brightness.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+				Brightness.BorderColor3 = Color3.fromRGB(40, 40, 40)
+				Brightness.BorderSizePixel = 0
+				Brightness.Position = UDim2.new(0.868113995, 0, 0.146547258, 0)
+				Brightness.Size = UDim2.new(0.156471312, 0, 0.587000132, 0)
+				Brightness.ZIndex = 4
+				Brightness.Image = "rbxassetid://359311684"
+				Brightness.SliceCenter = Rect.new(10, 10, 90, 90)
+
+				Marker_2.Name = "Marker"
+				Marker_2.Parent = Brightness
+				Marker_2.AnchorPoint = Vector2.new(0.5, 0.5)
+				Marker_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Marker_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+				Marker_2.BorderSizePixel = 0
+				Marker_2.Position = UDim2.new(0.500000536, 0, 0.0272794869, 0)
+				Marker_2.Size = UDim2.new(1, 4, 0.0505603775, 2)
+				Marker_2.ZIndex = 5
+
+				UICorner_5.Parent = Marker_2
+
+				UICorner_6.Parent = Brightness
+
+				Preview.Name = "Preview"
+				Preview.Parent = _ColorPicker
+				Preview.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Preview.Position = UDim2.new(0.0495238192, 0, 0.75714469, 0)
+				Preview.Size = UDim2.new(0, 201, 0, 18)
+
+				UICorner_7.CornerRadius = UDim.new(0, 5)
+				UICorner_7.Parent = Preview
+
+				Apply.Name = "Apply"
+				Apply.Parent = _ColorPicker
+				Apply.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+				Apply.Position = UDim2.new(0.656026781, 0, 0.875971317, 0)
+				Apply.Size = UDim2.new(0, 69, 0, 20)
+				Apply.AutoButtonColor = false
+				Apply.Font = Enum.Font.SourceSansBold
+				Apply.Text = "Apply"
+				Apply.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Apply.TextSize = 14.000
+
+				UICorner_8.CornerRadius = UDim.new(0, 5)
+				UICorner_8.Parent = Apply
+
+				local Color_Picker = {}
+				
+					Color_Picker.Info = {}
+						Color_Picker.Info.Mouse = game.Players.LocalPlayer:GetMouse()
+						Color_Picker.Info.Color = Color3.fromHSV(1, 1, 1)
+						Color_Picker.Info.Data = {1, 1, 1}
+						Color_Picker.Info.IsHoldingMouseButton1 = false
+				
+					Color_Picker.UI = {}
+						Color_Picker.UI.Main = ColorPicker_Main
+						Color_Picker.UI.Brightness = Brightness
+				
+						Color_Picker.UI.Color = Preview
+				
+					Color_Picker.Functions = {}
+						function Color_Picker.Functions:Set(Hue, Sat, Val)
+							Color_Picker.Info.Data = {Hue or Color_Picker.Info.Data[1], Sat or Color_Picker.Info.Data[2], Val or Color_Picker.Info.Data[3]}
+							Color_Picker.Info.Color = Color3.fromHSV(Color_Picker.Info.Data[1], Color_Picker.Info.Data[2], Color_Picker.Info.Data[3])
+							Color_Picker.UI.Color.BackgroundColor3 = Color_Picker.Info.Color
+							Color_Picker.UI.Brightness.ImageColor3 = Color3.fromHSV(Color_Picker.Info.Data[1], Color_Picker.Info.Data[2], 1)
+						end
+				
+						function Color_Picker.Functions:IsMouseInBoundOf(FrameInBound)
+							local X_Pos, Y_Pos = Color_Picker.Info.Mouse.X - FrameInBound.AbsolutePosition.X, Color_Picker.Info.Mouse.Y - FrameInBound.AbsolutePosition.Y
+							local X_Size, Y_Size = FrameInBound.AbsoluteSize.X, FrameInBound.AbsoluteSize.Y
+							if X_Pos >= 0 and Y_Pos >= 0 and X_Pos <= X_Size and Y_Pos <= Y_Size then
+								return X_Pos/X_Size, Y_Pos/Y_Size
+							end
+						end
+				
+						function Color_Picker.Functions:Update()
+							if Color_Picker.Info.IsHoldingMouseButton1 then
+								local X, Y = Color_Picker.Functions:IsMouseInBoundOf(Color_Picker.UI.Main)
+								if X and Y then
+									Color_Picker.UI.Main.Marker.Position = UDim2.new(X, 0, Y, 0)
+									Color_Picker.Functions:Set(1 - X, 1 - Y)
+								end
+				
+								local X, Y = Color_Picker.Functions:IsMouseInBoundOf(Color_Picker.UI.Brightness)
+								if X and Y then
+									Color_Picker.UI.Brightness.Marker.Position = UDim2.new(0.5, 0, Y, 0)
+									Color_Picker.Functions:Set(nil, nil, 1 - Y)
+								end
+							end
+						end
+				
+				
+					Color_Picker.Info.Mouse.Move:Connect(Color_Picker.Functions.Update)
+			
+					Color_Picker.Info.Mouse.Button1Down:Connect(function()Color_Picker.Info.IsHoldingMouseButton1 = true end)
+					Color_Picker.Info.Mouse.Button1Up:Connect(function()Color_Picker.Info.IsHoldingMouseButton1 = false end)
+				
+				Apply.MouseButton1Down:Connect(function()
+					spawn(function()
+						callback(Color_Picker.Info.Color)
+					end)
+					Top.Visible = false
+					Color.BackgroundColor3 = Color_Picker.Info.Color
+				end)
+			end
 
 			items.label = function(text)
 				local funcs = {}

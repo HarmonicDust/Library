@@ -33,7 +33,7 @@ local tab2 = main.tab("Tab 2")
 local section1 = tab1.section("Section 1", {opened = true})
 local section2 = tab1.section("Section 2", {opened = true})
 
-section1.label("Made by Proxide & Vynixu; Made for Mikee :)") --:)
+section1.label("Made by Harmony & Vynixu; Made for Mikee :)") --:)
 --[[
 	to change the text:
 	local label = section1.label("blah blah blah")
@@ -72,3 +72,11 @@ end)
 	toggle.callback(false): prints false, *as it is what the toggle does when disabled*
 	print(toggle.getcurrentstate()): simply prints if the toggle is enabled
 ]]
+
+section2.colorpicker("Color picker", function(color)
+    for i, v in next, game.Players.LocalPlayer.Character:GetDescendants() do
+        if v:IsA("BasePart") or v:IsA("Part") then
+            v.Color = color
+        end
+    end
+end)

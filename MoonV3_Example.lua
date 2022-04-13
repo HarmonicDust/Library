@@ -1,4 +1,4 @@
-local moon = loadstring(game:HttpGet("https://raw.githubusercontent.com/Proxides/Library/main/MoonV3.lua", true))()
+local moon = loadstring(game:HttpGet("https://raw.githubusercontent.com/HarmonicDust/Library/main/MoonV3.lua", true))()
 
 moon.colors = { --customization; as of now toggles are the only item supported by this feature
 	toggles = {

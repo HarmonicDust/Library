@@ -1,4 +1,4 @@
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Proxides/Library/main/Sky.lua", true))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/HarmonicDust/Library/main/Sky.lua", true))()
 
 local main = library.Init("Library") -- library name
 

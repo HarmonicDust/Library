@@ -5,7 +5,7 @@ getgenv().colors = {
     toggle_off = Color3.fromRGB(255, 75, 50) --red when toggles are disabled
 }
 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Proxides/Library/main/Moon.lua", true))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/HarmonicDust/Library/main/Moon.lua", true))()
 
 task.wait() -- Prevent sliders when being loaded to error (if a player has walkspeed already before character is loaded)
 

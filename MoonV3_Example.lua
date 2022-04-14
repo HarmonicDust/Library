@@ -81,7 +81,7 @@ section2.colorpicker("Color picker", function(color)
     end
 end)
 
-section1.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, runwhenloaded = false}, function(val)
+section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, runwhenloaded = false}, function(val)
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = val
 	print(val)
 end)

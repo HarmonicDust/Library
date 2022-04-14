@@ -917,12 +917,11 @@ moon.new = function(title, config)
 
 				config.text = config.text or ""
 				config.placeholder = config.placeholder or "Textbox"
+				config.clearonfocus = config.clearonfocus or true
 
 				local Textbox = Instance.new("Frame")
 				local UICorner = Instance.new("UICorner")
 				local TextBox = Instance.new("TextBox")
-				
-				--Properties:
 				
 				Textbox.Name = "Textbox"
 				Textbox.Parent = Inner
@@ -942,6 +941,7 @@ moon.new = function(title, config)
 				TextBox.PlaceholderColor3 = Color3.fromRGB(152, 152, 152)
 				TextBox.PlaceholderText = config.placeholder
 				TextBox.Text = config.text
+				TextBox.ClearOnFocus = config.clearonfocus
 				TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 				TextBox.TextSize = 11.000
 				TextBox.TextXAlignment = Enum.TextXAlignment.Left

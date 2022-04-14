@@ -15,7 +15,7 @@ print("Path: "..moon.getui():GetFullName()) --really a misc feature, doesn't hav
 
 local dropdown = moon.newmenu or moon.newdropdown --either one works, you don't need a variable for this function
 
-local menu = dropdown("Introducing new Menus/Dropdowns", {closewhenclicked = false}) --creates new menu
+local menu = dropdown("Menu/Dropdown", {closewhenclicked = false}) --creates new menu
 
 --adding options to the menu
 menu.add("Option 1", function()
@@ -42,6 +42,14 @@ section1.label("Made by Harmony & Vynixu; Made for Mikee :)") --:)
 
 section1.keybind("Keybind", {bind = Enum.KeyCode.E}, function() --creates a keybind, default bind when loaded is E
 	print("Vynixu stole your slice of bread :(")
+end)
+
+section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = true}, function(text)
+	local t = text
+		
+	if t == "1234" then
+		print("Hello!")	
+	end
 end)
 
 section2.button("Dropdown loader", {

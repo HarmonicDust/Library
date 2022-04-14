@@ -735,6 +735,183 @@ moon.new = function(title, config)
 				return funcs
 			end
 
+			items.slider = function(name, config, callback)
+				config = config or {}
+				name = name or "Slider"
+				config.min = config.min or 0
+				config.max = 100
+				config.default = config.default or 50
+				config.loopfire = config.loopfire or false -- true causes performance issues
+				config.runwhenloaded = config.runwhenloaded or false
+
+				local Slider = Instance.new("Frame")
+				local Name = Instance.new("TextLabel")
+				local UICorner = Instance.new("UICorner")
+				local Value = Instance.new("TextLabel")
+				local Slide = Instance.new("TextButton")
+				local UICorner_2 = Instance.new("UICorner")
+				local Indicator = Instance.new("Frame")
+				local Circle = Instance.new("Frame")
+				local UICorner_3 = Instance.new("UICorner")
+				local UICorner_4 = Instance.new("UICorner")
+
+				--Properties:
+
+				Slider.Name = "Slider"
+				Slider.Parent = Inner
+				Slider.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
+				Slider.Position = UDim2.new(0, 0, 9.33333302, 0)
+				Slider.Size = UDim2.new(0, 378, 0, 46)
+
+				Name.Name = "Name"
+				Name.Parent = Slider
+				Name.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Name.BackgroundTransparency = 1.000
+				Name.Position = UDim2.new(0.0271377154, 0, 0, 0)
+				Name.Size = UDim2.new(0, 364, 0, 26)
+				Name.Font = Enum.Font.Gotham
+				Name.Text = name
+				Name.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Name.TextSize = 11.000
+				Name.TextWrapped = true
+				Name.TextXAlignment = Enum.TextXAlignment.Left
+
+				UICorner.CornerRadius = UDim.new(0, 4)
+				UICorner.Parent = Slider
+
+				Value.Name = "Value"
+				Value.Parent = Slider
+				Value.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Value.BackgroundTransparency = 1.000
+				Value.Position = UDim2.new(0.606502771, 0, 0, 0)
+				Value.Size = UDim2.new(0, 143, 0, 26)
+				Value.Font = Enum.Font.Gotham
+				Value.Text = tostring(config.default) .. "/" .. tostring(config.max)
+				Value.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Value.TextSize = 11.000
+				Value.TextWrapped = true
+				Value.TextXAlignment = Enum.TextXAlignment.Right
+
+				Slide.Name = "Slide"
+				Slide.Parent = Slider
+				Slide.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
+				Slide.Position = UDim2.new(0.023, 0, 0.745000005, 0)
+				Slide.Size = UDim2.new(0, 360, 0, 4)
+				Slide.AutoButtonColor = false
+				Slide.Font = Enum.Font.SourceSans
+				Slide.Text = ""
+				Slide.TextColor3 = Color3.fromRGB(0, 0, 0)
+				Slide.TextSize = 14.000
+
+				UICorner_2.CornerRadius = UDim.new(1, 0)
+				UICorner_2.Parent = Slide
+
+				Indicator.Name = "Indicator"
+				Indicator.Parent = Slide
+				Indicator.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+				Indicator.BorderSizePixel = 0
+				Indicator.Size = UDim2.new(0, 360, 1, 0)
+
+				Circle.Name = "Circle"
+				Circle.Parent = Indicator
+				Circle.BackgroundColor3 = Color3.fromRGB(109, 109, 109)
+				Circle.Position = UDim2.new(1, 0, -0.25, 0)
+				Circle.Size = UDim2.new(0, 6, 0, 6)
+
+				UICorner_3.CornerRadius = UDim.new(0, 4)
+				UICorner_3.Parent = Circle
+
+				UICorner_4.CornerRadius = UDim.new(1, 0)
+				UICorner_4.Parent = Indicator
+
+				local UserInputService = game:GetService("UserInputService")
+				local TweenService = game:GetService("TweenService")
+				local Dragging = false
+
+				local _Slide = config.default
+
+				Indicator.Size = UDim2.new(0, (Slide.AbsoluteSize.X*config.default/config.max), 1, 0)
+				Value.Text = tostring(config.default)
+
+				local function Update()
+					if Dragging then
+						local MousePos = UserInputService:GetMouseLocation()
+						local MinPoint = (Slide.AbsolutePosition.X)
+						local MaxPoint = (Slide.AbsolutePosition.X + Slide.AbsoluteSize.X)
+
+						if MousePos.X < MinPoint then
+							Indicator:TweenSize(UDim2.fromScale(0, 1), "Out", "Sine", 0.1, true)
+						elseif MousePos.X > MaxPoint then
+							Indicator:TweenSize(UDim2.fromScale(1, 1), "Out", "Sine", 0.1, true)
+						else
+							Indicator:TweenSize(UDim2.fromScale((MousePos.X - Slide.AbsolutePosition.X) / Slide.AbsoluteSize.X, 1), "Out", "Sine", 0.1, true)
+						end
+
+						wait(0.1)
+
+						local Percent = (Circle.AbsolutePosition.X - Slide.AbsolutePosition.X) / (Slide.AbsoluteSize.X - Circle.Size.X.Offset) * config.max
+
+						_Slide = Percent
+
+						if math.floor(_Slide) < config.min then
+							_Slide = config.min
+						elseif math.floor(_Slide) > config.max then
+							_Slide = config.max
+						end
+
+						Value.Text = tostring(math.floor(_Slide)).."/"..config.max
+
+						if config.loopfire then
+							callback(math.floor(_Slide))
+						end
+					end
+				end
+				
+				Slide.MouseButton1Down:Connect(function()
+					Dragging = true
+					Update()
+				end)
+
+				local Mouse = game.Players.LocalPlayer:GetMouse()
+
+				local function IsMouseInBoundOf(FrameInBound)
+					local X_Pos, Y_Pos = Mouse.X - FrameInBound.AbsolutePosition.X, Mouse.Y - FrameInBound.AbsolutePosition.Y
+					local X_Size, Y_Size = FrameInBound.AbsoluteSize.X, FrameInBound.AbsoluteSize.Y
+					if X_Pos >= 0 and Y_Pos >= 0 and X_Pos <= X_Size and Y_Pos <= Y_Size then
+						return X_Pos/X_Size, Y_Pos/Y_Size
+					end
+				end
+				
+				UserInputService.InputEnded:Connect(function(Input)
+					if Input.UserInputType == Enum.UserInputType.MouseButton1 and not config.loopfire and IsMouseInBoundOf(Slider) then --and not config.loopfire and IsMouseInBoundOf(Slider) then task.wait(.075)
+						Dragging = false
+						--if not config.loopfire and IsMouseInBoundOf(Slider) then 
+						callback(math.floor(_Slide))
+						--end
+					end
+				end)
+
+				UserInputService.InputChanged:Connect(Update)
+				
+				local Percent = (Circle.AbsolutePosition.X - Slide.AbsolutePosition.X) / (Slide.AbsoluteSize.X - Circle.Size.X.Offset) * config.max
+
+				_Slide = Percent
+
+				if math.floor(_Slide) < config.min then
+					_Slide = config.min
+				elseif math.floor(_Slide) > config.max then
+					_Slide = config.max
+				end
+
+				Value.Text = tostring(math.floor(_Slide)).."/"..config.max
+
+				
+				
+				if config.runwhenloaded then
+					callback(math.floor(_Slide))
+				end
+			end
+
 			items.colorpicker = function(name, callback)
 				local ColorPicker = Instance.new("Frame")
 				local Name_4 = Instance.new("TextLabel")

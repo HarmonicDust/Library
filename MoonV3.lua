@@ -915,9 +915,12 @@ moon.new = function(title, config)
 			items.textbox = function(config, callback)
 				config = config or {}
 
+				local funcs = {}
+
 				config.text = config.text or ""
 				config.placeholder = config.placeholder or "Textbox"
 				config.clearonfocus = config.clearonfocus or true
+				config.getplayer = config.getplayer or false
 
 				local Textbox = Instance.new("Frame")
 				local UICorner = Instance.new("UICorner")
@@ -931,7 +934,24 @@ moon.new = function(title, config)
 				
 				UICorner.CornerRadius = UDim.new(0, 4)
 				UICorner.Parent = Textbox
-				
+
+				if config.getplayer then
+					local oldcallback = callback
+					callback = function()
+						for i, v in pairs(game.Players:GetPlayers()) do
+							if (string.sub(string.lower(v.Name), 1, string.len(TextBox.Text))) == string.lower(TextBox.Text) or (string.sub(string.lower(v.DisplayName), 1, string.len(TextBox.Text))) == string.lower(TextBox.Text) then
+								TextBox.Text = v.Name
+								oldcallback(TextBox.Text)
+							end
+						end
+					end
+				end
+
+				funcs.settext = function(newText)
+					newText = newText or config.text
+					TextBox.Text = newText
+				end
+
 				TextBox.Parent = Textbox
 				TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 				TextBox.BackgroundTransparency = 1.000
@@ -948,6 +968,7 @@ moon.new = function(title, config)
 				TextBox.FocusLost:Connect(function()
 					callback(TextBox.Text)
 				end)
+				return funcs
 			end
 
 			items.colorpicker = function(name, callback)

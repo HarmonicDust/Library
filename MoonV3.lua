@@ -912,6 +912,44 @@ moon.new = function(title, config)
 				end
 			end
 
+			items.textbox = function(config, callback)
+				config = config or {}
+
+				config.text = config.text or ""
+				config.placeholder = config.placeholder or "Textbox"
+
+				local Textbox = Instance.new("Frame")
+				local UICorner = Instance.new("UICorner")
+				local TextBox = Instance.new("TextBox")
+				
+				--Properties:
+				
+				Textbox.Name = "Textbox"
+				Textbox.Parent = Inner
+				Textbox.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+				Textbox.Position = UDim2.new(0.732804239, 0, 0.115384616, 0)
+				Textbox.Size = UDim2.new(0, 378, 0, 26)
+				
+				UICorner.CornerRadius = UDim.new(0, 4)
+				UICorner.Parent = Textbox
+				
+				TextBox.Parent = Textbox
+				TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				TextBox.BackgroundTransparency = 1.000
+				TextBox.Position = UDim2.new(0.0270000007, 0, 0, 0)
+				TextBox.Size = UDim2.new(0, 364, 0, 26)
+				TextBox.Font = Enum.Font.Gotham
+				TextBox.PlaceholderColor3 = Color3.fromRGB(152, 152, 152)
+				TextBox.PlaceholderText = config.placeholder
+				TextBox.Text = config.text
+				TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+				TextBox.TextSize = 11.000
+				TextBox.TextXAlignment = Enum.TextXAlignment.Left
+				TextBox.FocusLost:Connect(function()
+					callback(TextBox.Text)
+				end)
+			end
+
 			items.colorpicker = function(name, callback)
 				local ColorPicker = Instance.new("Frame")
 				local Name_4 = Instance.new("TextLabel")

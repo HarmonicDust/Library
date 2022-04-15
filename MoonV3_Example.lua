@@ -44,7 +44,7 @@ section1.keybind("Keybind", {bind = Enum.KeyCode.E}, function() --creates a keyb
 	print("Vynixu stole your slice of bread :(")
 end)
 
-section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = true}, function(text)
+section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = true}, function(text) --setting getplayers to true will auto fill player names for the textbox!
 	local t = text
 		
 	if t == "1234" then

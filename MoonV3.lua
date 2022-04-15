@@ -888,6 +888,8 @@ moon.new = function(title, config)
 						--if not config.loopfire and IsMouseInBoundOf(Slider) then 
 						callback(math.floor(_Slide))
 						--end
+					elseif Input.UserInputType == Enum.UserInputType.MouseButton1 and config.loopfire then
+						Dragging = false
 					end
 				end)
 

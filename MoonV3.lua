@@ -1248,6 +1248,7 @@ moon.new = function(title, config)
 				Name_5.TextWrapped = true
 				Name_5.TextXAlignment = Enum.TextXAlignment.Left
 				Name_5.Text = text
+				Name_5.RichText = true
 				
 				funcs.set = function(newtext)
 					Name_5.Text = newtext

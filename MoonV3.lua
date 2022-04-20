@@ -22,6 +22,33 @@ moon.colors = moon.colors or {
 	}
 }
 
+moon.settings = moon.settings or {
+	color_picker_offset = 950
+}
+
+local InBoundArea = Instance.new("ScreenGui")
+
+moon.protectgui(InBoundArea)
+
+local InBoundArea1 = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+
+InBoundArea.Name = "InBoundArea"
+InBoundArea.Parent = game:GetService("CoreGui")
+InBoundArea.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+InBoundArea.IgnoreGuiInset = true
+
+InBoundArea1.Parent = InBoundArea
+InBoundArea1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+InBoundArea1.BackgroundTransparency = 1.000
+InBoundArea1.Position = UDim2.new(0.0882137641, 0, 0.0826822892, 0)
+InBoundArea1.Size = UDim2.new(0, 1125, 1, 0)
+
+UIListLayout.Parent = InBoundArea
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+
 moon.newmenu = function(menuname, config)
 	menuname = menuname or "Dropdown/Menu"
 	menuname = "<b>"..menuname.."</b>"
@@ -259,7 +286,7 @@ moon.new = function(title, config)
 	Main.Parent = MoonLibraryV3
 	Main.Active = true
 	Main.BackgroundColor3 = Color3.fromRGB(21, 21, 21)
-	Main.Position = UDim2.new(0.332660884, 0, 0.224622011, 0)
+	Main.Position = UDim2.new(0.332660884, 0, 0, 50)
 	Main.Size = UDim2.new(0, 422, 0, 255)
 
 	UICorner.CornerRadius = UDim.new(0, 5)
@@ -973,7 +1000,12 @@ moon.new = function(title, config)
 				return funcs
 			end
 
-			items.colorpicker = function(name, callback)
+			items.colorpicker = function(name, config, callback)
+                name = name or "Color picker"
+                config = config or {}
+                callback = callback or function() end
+
+                config.follow_on_invisible = config.follow_on_invisible or true
 				local ColorPicker = Instance.new("Frame")
 				local Name_4 = Instance.new("TextLabel")
 				local UICorner_10 = Instance.new("UICorner")
@@ -1222,6 +1254,24 @@ moon.new = function(title, config)
 					Top.Visible = false
 					Color.BackgroundColor3 = Color_Picker.Info.Color
 				end)
+
+                if config.follow_on_invisible then
+                    function IsColorPickerInBoundOf(FrameInBound)
+                        local X_Pos, Y_Pos = Top.AbsolutePosition.X - FrameInBound.AbsolutePosition.X, Top.AbsolutePosition.Y - FrameInBound.AbsolutePosition.Y
+                        local X_Size, Y_Size = FrameInBound.AbsoluteSize.X, FrameInBound.AbsoluteSize.Y
+                        if X_Pos >= 0 and Y_Pos >= 0 and X_Pos <= X_Size and Y_Pos <= Y_Size then
+                            return X_Pos/X_Size, Y_Pos/Y_Size
+                        end
+                    end
+                    game:GetService("RunService").RenderStepped:Connect(function()
+                        if not Top.Visible and IsColorPickerInBoundOf(InBoundArea1) then
+                            print("yeah")
+                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.settings.color_picker_offset), 0, (Main.Position.Y.Offset))
+                            --Top.Position = UDim2.new(0, (Main.Position.X.Offset + 950), 0, (Main.Position.Y.Offset + 150))
+                            print("mhm", (Main.Position.X.Scale + 0.313))
+                        end
+                    end)
+                end
 			end
 
 			items.label = function(text)
@@ -1423,4 +1473,4 @@ moon.new = function(title, config)
 	coroutine.wrap(FDYOIHU_fake_script)()
 	return tabs
 end
-return moon
+return library

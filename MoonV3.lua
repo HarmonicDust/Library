@@ -5,6 +5,7 @@ local moon = {}
 moon.protectgui = syn and syn.protect_gui or protectgui
 
 --init:
+
 moon.images = {
 	dropdown = {
 		image = "rbxassetid://3926305904",
@@ -12,6 +13,8 @@ moon.images = {
 		imagerectsize = Vector2.new(36, 36)
 	}
 }
+
+--library headers:
 
 moon.colors = moon.colors or {
 	toggles = {

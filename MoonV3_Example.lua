@@ -9,6 +9,10 @@ moon.colors = { --customization; as of now toggles are the only item supported b
 	}
 }
 
+moon.settings = {
+    color_picker_offset = 950
+}
+
 local main = moon.new("Moon Library V3", {close_tab_onclick = true}) --name of the ui
 
 print("Path: "..moon.getui():GetFullName()) --really a misc feature, doesn't have much use

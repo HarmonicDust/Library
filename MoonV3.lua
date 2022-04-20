@@ -1476,4 +1476,4 @@ moon.new = function(title, config)
 	coroutine.wrap(FDYOIHU_fake_script)()
 	return tabs
 end
-return library
+return moon

@@ -44,20 +44,24 @@ section1.keybind("Keybind", {bind = Enum.KeyCode.E}, function() --creates a keyb
 	print("Vynixu stole your slice of bread :(")
 end)
 
-section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = true}, function(text) --setting getplayers to true will auto fill player names for the textbox!
+section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = true}, function(text)
 	local t = text
 		
-	if t == "1234" then
-		print("Hello!")	
+	if t == "1234" then -- if text is 1234, it will run the line below
+		print("Hello!")
 	end
 end)
 
-section2.button("Dropdown loader", {
+section1.textbox({text = "Playerbox", placeholder = "Autofills player (display) name", clearonfocus = true, getplayer = true}, function(player)
+    print(player)
+end)
+
+section2.button("Button", {
 	image = moon.images.dropdown.image, --gets dropdown image from moon.images
 	imagecolor = Color3.fromRGB(145, 145, 145), --color
 	imagerectsize = moon.images.dropdown.imagerectsize, --this is for the dropdown's image rect size
 	imagerectoffset = moon.images.dropdown.imagerectoffset, --dropdown's image offset
-	desc = "Loads a dropdown variable"}, function() --this is a description, a long with the callback
+	desc = "Loads a menu variable"}, function() --this is a description, a long with the callback
 		menu.load() --loads the menu upon a click (p.s. to exit a menu, click away from it; on the background)
 end)
 
@@ -81,7 +85,7 @@ end)
 	print(toggle.getcurrentstate()): simply prints if the toggle is enabled
 ]]
 
-section2.colorpicker("Color picker", function(color)
+section2.colorpicker("Color picker", {follow_on_invisible = true}, function(color) -- if the color picker ui appears next to library next time you open, if it gets stuck by your screen's end move it away from it
     for i, v in next, game.Players.LocalPlayer.Character:GetDescendants() do
         if v:IsA("BasePart") or v:IsA("Part") then
             v.Color = color
@@ -89,7 +93,7 @@ section2.colorpicker("Color picker", function(color)
     end
 end)
 
-section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, runwhenloaded = false}, function(val)
+section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, runwhenloaded = false}, function(val) -- sliders may be buggy, specifically when loopfire is set to false.
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = val
 	print(val)
 end)

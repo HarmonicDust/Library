@@ -1268,10 +1268,8 @@ moon.new = function(title, config)
                     end
                     game:GetService("RunService").RenderStepped:Connect(function()
                         if not Top.Visible and IsColorPickerInBoundOf(InBoundArea1) then
-                            print("yeah")
                             Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.settings.color_picker_offset), 0, (Main.Position.Y.Offset))
                             --Top.Position = UDim2.new(0, (Main.Position.X.Offset + 950), 0, (Main.Position.Y.Offset + 150))
-                            print("mhm", (Main.Position.X.Scale + 0.313))
                         end
                     end)
                 end

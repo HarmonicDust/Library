@@ -2,6 +2,55 @@
 
 local moon = {}
 
+moon.styles = {
+    "default",
+    "rounded",
+    "checkbox",
+    "beauty",
+    "vynixu",
+    "sideline"
+}
+
+local function dragify(Frame)
+	local dragToggle = nil
+	local dragSpeed = .25
+	local dragInput = nil
+	local dragStart = nil
+	local dragPos = nil
+	local startPos = nil
+
+	local function updateInput(input)
+		local Delta = input.Position - dragStart
+		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
+		game:GetService("TweenService"):Create(Frame, TweenInfo.new(.25), {Position = Position}):Play()
+	end
+
+	Frame.InputBegan:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
+			dragToggle = true
+			dragStart = input.Position
+			startPos = Frame.Position
+			input.Changed:Connect(function()
+				if (input.UserInputState == Enum.UserInputState.End) then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+
+	Frame.InputChanged:Connect(function(input)
+		if (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+			dragInput = input
+		end
+	end)
+
+	game:GetService("UserInputService").InputChanged:Connect(function(input)
+		if (input == dragInput and dragToggle) then
+			updateInput(input)
+		end
+	end)
+end
+
 moon.protectgui = syn and syn.protect_gui or protectgui
 
 --init:
@@ -18,10 +67,18 @@ moon.images = {
 
 moon.colors = moon.colors or {
 	toggles = {
-		enabled = Color3.fromRGB(48, 183, 255),
-		disabled = Color3.fromRGB(27, 27, 27),
-		enabled_stroke = Color3.fromRGB(28, 121, 171),
-		disabled_stroke = Color3.fromRGB(38, 38, 38)
+		enabled = Color3.fromRGB(35, 84, 182),
+		disabled = Color3.fromRGB(38, 38, 38), --28, 121, 171
+		enabled_secondary = Color3.fromRGB(28, 64, 141),
+		disabled_secondary = Color3.fromRGB(27, 27, 27)
+	}
+}
+
+moon.default = moon.default or {
+	toggles = {
+		animationspeed = .35,
+		style = "default",
+		enabled = false
 	}
 }
 
@@ -249,6 +306,7 @@ moon.newdropdown = moon.newmenu
 
 moon.new = function(title, config)
 	title = title or "Moon Library"
+	local oldTitle = title
 	config = config or {}
 	
 	title = "<b>"..title.."</b>"
@@ -260,6 +318,7 @@ moon.new = function(title, config)
 	moon.protectgui(MoonLibraryV3)
 	
 	local Main = Instance.new("Frame")
+    dragify(Main)
 	local UICorner = Instance.new("UICorner")
 	local TabsBg = Instance.new("Frame")
 	local UICorner_2 = Instance.new("UICorner")
@@ -278,7 +337,7 @@ moon.new = function(title, config)
 	local Black = Instance.new("Frame")
 	local UICorner_16 = Instance.new("UICorner")
 
-	MoonLibraryV3.Name = title
+	MoonLibraryV3.Name = oldTitle
 	MoonLibraryV3.Parent = game:GetService("CoreGui")
 
 	moon.getui = function()
@@ -670,18 +729,22 @@ moon.new = function(title, config)
 				name = name or "Toggle"
 				config = config or {}
 				callback = callback or function() end
-				config.enabled = config.enabled or false
-				config.animationspeed = config.animationspeed or .3
+				config.enabled = config.enabled or moon.default.toggles.enabled
+				config.animationspeed = config.animationspeed or moon.default.toggles.animationspeed
+                config.style = config.style or moon.default.toggles.style
 				
 				local funcs = {}
 				
+                function funcs.getstyle()
+                    if table.find(moon.styles, config.style) then
+                        return config.style
+                    end
+                end
+
 				local Toggle = Instance.new("TextButton")
 				local UICorner_8 = Instance.new("UICorner")
 				local Name_3 = Instance.new("TextLabel")
-				local Frame = Instance.new("Frame")
-				local UICorner_9 = Instance.new("UICorner")
-				local UIStroke = Instance.new("UIStroke")
-
+				
 				Toggle.Name = "Toggle"
 				Toggle.Parent = Inner
 				Toggle.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
@@ -692,39 +755,419 @@ moon.new = function(title, config)
 				Toggle.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Toggle.TextSize = 11.000
 				Toggle.TextWrapped = true
+
+                if funcs.getstyle() == "default" then
+                    local Frame = Instance.new("Frame")
+                    local UICorner_9 = Instance.new("UICorner")
+                    local UIStroke = Instance.new("UIStroke")
+
+                    UIStroke.Parent = Frame
+                    UIStroke.Thickness = 2
+
+                    Frame.Parent = Toggle
+                    Frame.Position = UDim2.new(0.944444418, 0, 0.192307696, 0)
+                    Frame.Size = UDim2.new(0, 16, 0, 16)
+
+                    UICorner_9.CornerRadius = UDim.new(0, 4)
+                    UICorner_9.Parent = Frame
 				
-				if config.enabled then
-					Frame.BackgroundColor3 = moon.colors.toggles.enabled
-					UIStroke.Color = moon.colors.toggles.enabled_stroke
-				else
-					Frame.BackgroundColor3 = moon.colors.toggles.disabled
-					UIStroke.Color = moon.colors.toggles.disabled_stroke
+                    if config.enabled then
+                        -- default
+                        --if funcs.getstyle() == "default" then
+                            Frame.BackgroundColor3 = moon.colors.toggles.enabled
+                            UIStroke.Color = moon.colors.toggles.enabled_secondary
+                        --end
+
+
+                    else
+                        --if funcs.getstyle() == "default" then
+                            Frame.BackgroundColor3 = moon.colors.toggles.disabled
+                            UIStroke.Color = moon.colors.toggles.disabled_secondary
+                        --end
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.enabled_secondary}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.disabled_secondary}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.enabled_secondary}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.disabled_secondary}):Play()
+                        end
+                    end
 				end
+
+                if funcs.getstyle() == "rounded" then
+                    local ImageLabel = Instance.new("ImageLabel")
+
+                    ImageLabel.Parent = Toggle
+                    ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                    ImageLabel.BackgroundTransparency = 1.000
+                    ImageLabel.Position = UDim2.new(0.952000022, 0, 0.307999998, 0)
+                    ImageLabel.Size = UDim2.new(0, 10, 0, 10)
+                    ImageLabel.Image = "rbxassetid://3926305904"
+                    ImageLabel.ImageRectOffset = Vector2.new(124, 124)
+                    ImageLabel.ImageRectSize = Vector2.new(36, 36)
 				
-				Toggle.MouseButton1Down:Connect(function()
-					config.enabled = not config.enabled
-					spawn(function()
-						callback(config.enabled)
-					end)
-					--ctrl c + v lmao
+                    if config.enabled then
+                        -- rounded
+                        --if funcs.getstyle() == "default" then
+                            ImageLabel.ImageColor3 = moon.colors.toggles.enabled
+                        --end
+
+
+                    else
+                        --if funcs.getstyle() == "default" then
+                            ImageLabel.ImageColor3 = moon.colors.toggles.disabled
+                        --end
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end
+				end
+
+                if funcs.getstyle() == "checkbox" then
+                    local Frame = Instance.new("Frame")
+                    local UICorner = Instance.new("UICorner")
+                    local ImageLabel = Instance.new("ImageLabel")
+                    local UIListLayout = Instance.new("UIListLayout")
+
+                    local uistroke = Instance.new("UIStroke", Frame)
+
+                    uistroke.ApplyStrokeMode = "Contextual"
+                    uistroke.Color = Color3.fromRGB(134, 134, 134)
+                    uistroke.LineJoinMode = "Round"
+                    uistroke.Thickness = 1
+                    uistroke.Transparency = 0
+
+                    Frame.Parent = Toggle
+                    --Frame.BackgroundColor3 = Color3.fromRGB(28, 64, 141)
+                    Frame.Position = UDim2.new(0.944000006, 0, 0.192000002, 0)
+                    Frame.Size = UDim2.new(0, 16, 0, 16)
+
+                    UICorner.CornerRadius = UDim.new(0, 4)
+                    UICorner.Parent = Frame
+
+                    ImageLabel.Parent = Frame
+                    ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+                    ImageLabel.BackgroundTransparency = 1.000
+                    ImageLabel.Position = UDim2.new(0.0799999982, 0, 0.100000001, 0)
+                    ImageLabel.Size = UDim2.new(0, 12, 0, 12)
+                    ImageLabel.Image = "rbxassetid://3926305904"
+                    ImageLabel.ImageRectOffset = Vector2.new(312, 4)
+                    ImageLabel.ImageRectSize = Vector2.new(24, 24)
+
+                    UIListLayout.Parent = Frame
+                    UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+                    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+                    UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+				
+                    if config.enabled then
+                        -- checkbox
+                        --if funcs.getstyle() == "default" then
+                            Frame.BackgroundColor3 = moon.colors.toggles.enabled
+                            ImageLabel.ImageTransparency = 0
+                        --end
+
+
+                    else
+                        --if funcs.getstyle() == "default" then
+                            Frame.BackgroundColor3 = moon.colors.toggles.disabled
+                            ImageLabel.ImageTransparency = 1
+                        --end
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageTransparency = 0}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageTransparency = 1}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageTransparency = 0}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageTransparency = 1}):Play()
+                        end
+                    end
+				end
+
+				if funcs.getstyle() == "vynixu" then
+					local lens = Instance.new("ImageButton")
+
+					lens.Name = "lens"
+					lens.Parent = Toggle
+					lens.BackgroundTransparency = 1.000
+					lens.LayoutOrder = 6
+					lens.Position = UDim2.new(0.937758207, 0, 0.538307667, 0)
+					lens.Size = UDim2.new(0, 9, 0, 9)
+					lens.ZIndex = 2
+					lens.Image = "rbxassetid://3926305904"
+					lens.ImageColor3 = Color3.fromRGB(28, 64, 141)
+					lens.ImageRectOffset = Vector2.new(124, 124)
+					lens.ImageRectSize = Vector2.new(36, 36)
+
+					local lens2 = Instance.new("ImageButton")
+					local Frame = Instance.new("Frame")
+					local UICorner = Instance.new("UICorner")
+					local UIListLayout = Instance.new("UIListLayout")
+					local UIPadding = Instance.new("UIPadding")
+
+					lens2.Name = "lens"
+					lens2.Parent = Toggle
+					lens2.BackgroundTransparency = 1.000
+					lens2.LayoutOrder = 6
+					lens2.Position = UDim2.new(0.951494455, 0, 0.538307667, 0)
+					lens2.Size = UDim2.new(0, 9, 0, 9)
+					lens2.ZIndex = 2
+					lens2.Image = "rbxassetid://3926305904"
+					lens2.ImageColor3 = Color3.fromRGB(28, 64, 141)
+					lens2.ImageRectOffset = Vector2.new(124, 124)
+					lens2.ImageRectSize = Vector2.new(36, 36)
+
+					Frame.Parent = lens2
+					Frame.BackgroundColor3 = Color3.fromRGB(28, 64, 141)
+					Frame.Position = UDim2.new(-0.100000001, 0, -1, 0)
+					Frame.Size = UDim2.new(0, 6, 0, 13)
+
+					UICorner.CornerRadius = UDim.new(1, 0)
+					UICorner.Parent = Frame
+
+					UIListLayout.Parent = lens2
+					UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+					UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+
+					UIPadding.Parent = lens2
+					UIPadding.PaddingBottom = UDim.new(0, 4)
+					UIPadding.PaddingRight = UDim.new(0, 10)
+
 					if config.enabled then
-						game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
-						game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.enabled_stroke}):Play()
-					else
-						game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
-						game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.disabled_stroke}):Play()
-					end
-				end)
-				
-				funcs.set = function(new)
-					config.enabled = new
-					if new then
-						game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
-						game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.enabled_stroke}):Play()
-					else
-						game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
-						game:GetService('TweenService'):Create(UIStroke, TweenInfo.new(config.animationspeed), {Color = moon.colors.toggles.disabled_stroke}):Play()
-					end
+                        -- rounded
+                        --if funcs.getstyle() == "default" then
+							lens.ImageColor3 = moon.colors.toggles.enabled
+							lens2.ImageColor3 = moon.colors.toggles.enabled
+							Frame.Size = UDim2.new(0, 6, 0, 13)
+							Frame.BackgroundColor3 = moon.colors.toggles.enabled
+                        --end
+
+
+                    else
+                        --if funcs.getstyle() == "default" then
+							lens.ImageColor3 = moon.colors.toggles.disabled
+							lens2.ImageColor3 = moon.colors.toggles.disabled
+							Frame.Size = UDim2.new(0, 6, 0, 10)
+							Frame.BackgroundColor3 = moon.colors.toggles.disabled
+                        --end
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(lens2, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {Size = UDim2.new(0, 6, 0, 13)}):Play()
+                        else
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(lens2, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {Size = UDim2.new(0, 6, 0, 10)}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(lens2, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {Size = UDim2.new(0, 6, 0, 13)}):Play()
+                        else
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(lens2, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {Size = UDim2.new(0, 6, 0, 10)}):Play()
+                        end
+                    end
+				end
+
+				if funcs.getstyle() == "beauty" then
+					local Frame = Instance.new("Frame")
+					local UICorner = Instance.new("UICorner")
+					local UIListLayout = Instance.new("UIListLayout")
+					local lens = Instance.new("ImageLabel")
+					local UIPadding = Instance.new("UIPadding")
+
+					Frame.Parent = Toggle
+					Frame.Position = UDim2.new(0.917545021, 0, 0.307384789, 0)
+					Frame.Size = UDim2.new(0, 22, 0, 10)
+
+					UICorner.CornerRadius = UDim.new(1, 0)
+					UICorner.Parent = Frame
+
+					UIListLayout.Parent = Frame
+					UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+					UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+					UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+
+					lens.Name = "lens"
+					lens.Parent = Frame
+					lens.BackgroundTransparency = 1.000
+					lens.LayoutOrder = 6
+					lens.Position = UDim2.new(0.937758207, 0, 0.538307667, 0)
+					lens.Size = UDim2.new(0, 8, 0, 8)
+					lens.ZIndex = 2
+					lens.Image = "rbxassetid://3926305904"
+					lens.ImageRectOffset = Vector2.new(124, 124)
+					lens.ImageRectSize = Vector2.new(36, 36)
+
+					UIPadding.Parent = Frame
+
+					if config.enabled then
+                        UIPadding.PaddingRight = UDim.new(0, -11)
+						Frame.BackgroundColor3 = moon.colors.toggles.enabled_secondary
+						lens.ImageColor3 = moon.colors.toggles.enabled
+                    else
+						UIPadding.PaddingRight = UDim.new(0, 11)
+						Frame.BackgroundColor3 = moon.colors.toggles.disabled_secondary
+						lens.ImageColor3 = moon.colors.toggles.disabled
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+                            game:GetService('TweenService'):Create(UIPadding, TweenInfo.new(config.animationspeed), {PaddingRight = UDim.new(0, -11)}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled_secondary}):Play()
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(UIPadding, TweenInfo.new(config.animationspeed), {PaddingRight = UDim.new(0, 11)}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled_secondary}):Play()
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(UIPadding, TweenInfo.new(config.animationspeed), {PaddingRight = UDim.new(0, -11)}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled_secondary}):Play()
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(UIPadding, TweenInfo.new(config.animationspeed), {PaddingRight = UDim.new(0, 11)}):Play()
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled_secondary}):Play()
+                            game:GetService('TweenService'):Create(lens, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end
+				end
+
+				if funcs.getstyle() == "sideline" then
+					local Frame = Instance.new("Frame")
+					local UICorner = Instance.new("UICorner")
+					local Frame_2 = Instance.new("Frame")
+
+					--Properties:
+
+					Frame.Parent = Toggle
+					Frame.BackgroundColor3 = Color3.fromRGB(28, 64, 141)
+					Frame.Position = UDim2.new(0.980000019, 0, 0, 0)
+					Frame.Size = UDim2.new(0, 7, 0, 26)
+
+					UICorner.CornerRadius = UDim.new(0, 4)
+					UICorner.Parent = Frame
+
+					Frame_2.Parent = Frame
+					Frame_2.BackgroundColor3 = Color3.fromRGB(28, 64, 141)
+					Frame_2.BorderSizePixel = 0
+					Frame_2.Size = UDim2.new(0, 6, 0, 26)
+
+					if config.enabled then
+                        Frame.BackgroundColor3 = moon.colors.toggles.enabled
+						Frame_2.BackgroundColor3 = moon.colors.toggles.enabled
+                    else
+						Frame.BackgroundColor3 = moon.colors.toggles.disabled
+						Frame_2.BackgroundColor3 = moon.colors.toggles.disabled
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+							game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+							game:GetService('TweenService'):Create(Frame_2, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+							game:GetService('TweenService'):Create(Frame_2, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+							game:GetService('TweenService'):Create(Frame_2, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+							game:GetService('TweenService'):Create(Frame_2, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end
 				end
 				
 				funcs.callback = function(en)
@@ -739,9 +1182,6 @@ moon.new = function(title, config)
 				
 				UICorner_8.CornerRadius = UDim.new(0, 4)
 				UICorner_8.Parent = Toggle
-				
-				UIStroke.Parent = Frame
-				UIStroke.Thickness = 2
 
 				Name_3.Name = "Name"
 				Name_3.Parent = Toggle
@@ -755,13 +1195,6 @@ moon.new = function(title, config)
 				Name_3.TextSize = 11.000
 				Name_3.TextWrapped = true
 				Name_3.TextXAlignment = Enum.TextXAlignment.Left
-
-				Frame.Parent = Toggle
-				Frame.Position = UDim2.new(0.944444418, 0, 0.192307696, 0)
-				Frame.Size = UDim2.new(0, 16, 0, 16)
-
-				UICorner_9.CornerRadius = UDim.new(0, 4)
-				UICorner_9.Parent = Frame
 				return funcs
 			end
 
@@ -1466,12 +1899,12 @@ moon.new = function(title, config)
 		end)
 	end
 	coroutine.wrap(THZU_fake_script)()
-	local function FDYOIHU_fake_script()
-		local script = Instance.new('LocalScript', Main)
+	-- local function FDYOIHU_fake_script()
+	-- 	local script = Instance.new('LocalScript', Main)
 
-		script.Parent.Draggable = true
-	end
-	coroutine.wrap(FDYOIHU_fake_script)()
+	-- 	script.Parent.Draggable = true
+	-- end
+	-- coroutine.wrap(FDYOIHU_fake_script)()
 	return tabs
 end
 return moon

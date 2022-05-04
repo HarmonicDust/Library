@@ -1,11 +1,19 @@
 local moon = loadstring(game:HttpGet("https://raw.githubusercontent.com/HarmonicDust/Library/main/MoonV3.lua", true))()
 
+moon.default = { --handy tool, kinda like css, except if you don't specify an argument it will set whatever you put here by default, not required
+	toggles = {
+		animationspeed = .35,
+		style = "default",
+		enabled = false
+	}
+}
+
 moon.colors = { --customization; as of now toggles are the only item supported by this feature
 	toggles = {
 		enabled = Color3.fromRGB(47, 255, 130),
 		disabled = Color3.fromRGB(255, 60, 63),
-		enabled_stroke = Color3.fromRGB(34, 144, 52),
-		disabled_stroke = Color3.fromRGB(141, 37, 38)
+		enabled_secondary = Color3.fromRGB(34, 144, 52),
+		disabled_secondary = Color3.fromRGB(141, 37, 38)
 	}
 }
 
@@ -37,7 +45,13 @@ local tab2 = main.tab("Tab 2")
 local section1 = tab1.section("Section 1", {opened = true})
 local section2 = tab1.section("Section 2", {opened = true})
 
-section1.label("Made by Harmony & Vynixu; Made for Mikee :)") --:)
+local section3 = tab2.section("Toggle Styles", {opened = true})
+
+--label
+
+section1.label("Harmony: UI and Scripter")
+section1.label("Vynixu: Keybinds and Concept ideas")
+section1.label("Haze: Asked to be in credits (lol)")
 --[[
 	to change the text:
 	local label = section1.label("blah blah blah")
@@ -101,3 +115,11 @@ section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, r
 	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = val
 	print(val)
 end)
+
+--toggle Styles
+
+for i, v in next, moon.styles do -- for every style
+    section3.toggle(v, {enabled = true, style = v, animationspeed = .35}, function(state) --create a toggle
+    	print(v, state)
+    end)
+end

@@ -1438,9 +1438,10 @@ moon.new = function(title, config)
 
 			items.dropdown = function(name, config)
 				name = name or "Dropdown"
+				
 				config = config or {}
-				config.close_on_click = config.close_on_click or true
-				config.zindex = config.zindex or 3
+				if config.close_on_click == nil then config.close_on_click = true end
+				if config.zindex == nil then config.zindex = 3 end
 
 				local content = {}
 
@@ -1524,97 +1525,97 @@ moon.new = function(title, config)
 					callback = callback or function() end
 						
 
-						local Option = Instance.new("TextButton")
-						
-						
-						local UIListLayout_2 = Instance.new("UIListLayout")
-						local UIPadding_2 = Instance.new("UIPadding")
+					local Option = Instance.new("TextButton")
+					
+					
+					local UIListLayout_2 = Instance.new("UIListLayout")
+					local UIPadding_2 = Instance.new("UIPadding")
 
-						Option.Name = "Option"
-						Option.Parent = Content
-						Option.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-						Option.BorderSizePixel = 0
-						Option.Size = UDim2.new(1, 0, 0, 36)
-						Option.ZIndex = config.zindex
-						Option.Font = Enum.Font.SourceSans
-						Option.Text = ""
-						Option.TextColor3 = Color3.fromRGB(0, 0, 0)
-						Option.TextSize = 14.000
+					Option.Name = "Option"
+					Option.Parent = Content
+					Option.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+					Option.BorderSizePixel = 0
+					Option.Size = UDim2.new(1, 0, 0, 36)
+					Option.ZIndex = config.zindex
+					Option.Font = Enum.Font.SourceSans
+					Option.Text = ""
+					Option.TextColor3 = Color3.fromRGB(0, 0, 0)
+					Option.TextSize = 14.000
 
-						local Title_2 = Instance.new("TextLabel")
+					local Title_2 = Instance.new("TextLabel")
 
-						Title_2.Name = "Aitle"
-						Title_2.Parent = Option
-						Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-						Title_2.BackgroundTransparency = 1.000
-						Title_2.Size = UDim2.new(0, 120, 0, 16)
-						Title_2.ZIndex = config.zindex
-						Title_2.Font = Enum.Font.GothamSemibold
-						Title_2.Text = stuff.name
-						Title_2.RichText = true
-						Title_2.TextWrapped = true
-						Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-						Title_2.TextSize = 11.000
-						Title_2.TextXAlignment = Enum.TextXAlignment.Left
-						Title_2.TextYAlignment = Enum.TextYAlignment.Top
+					Title_2.Name = "Aitle"
+					Title_2.Parent = Option
+					Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					Title_2.BackgroundTransparency = 1.000
+					Title_2.Size = UDim2.new(0, 120, 0, 16)
+					Title_2.ZIndex = config.zindex
+					Title_2.Font = Enum.Font.GothamSemibold
+					Title_2.Text = stuff.name
+					Title_2.RichText = true
+					Title_2.TextWrapped = true
+					Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+					Title_2.TextSize = 11.000
+					Title_2.TextXAlignment = Enum.TextXAlignment.Left
+					Title_2.TextYAlignment = Enum.TextYAlignment.Top
 
-						local Desc = Instance.new("TextLabel")
+					local Desc = Instance.new("TextLabel")
 
-						Desc.Name = "Desc"
-						Desc.Parent = Option
-						Desc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-						Desc.BackgroundTransparency = 1.000
-						Desc.Position = UDim2.new(0, 0, 0.514285743, 0)
-						Desc.Size = UDim2.new(0, 120, 0, 17)
-						Desc.ZIndex = config.zindex
-						Desc.Font = Enum.Font.Gotham
-						Desc.Text = stuff.desc
-						Desc.TextColor3 = Color3.fromRGB(180, 180, 180)
-						Desc.TextSize = 11.000
-						Desc.TextWrapped = true
-						Desc.TextXAlignment = Enum.TextXAlignment.Left
-						Desc.TextYAlignment = Enum.TextYAlignment.Top
-						Desc.RichText = true
+					Desc.Name = "Desc"
+					Desc.Parent = Option
+					Desc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					Desc.BackgroundTransparency = 1.000
+					Desc.Position = UDim2.new(0, 0, 0.514285743, 0)
+					Desc.Size = UDim2.new(0, 120, 0, 17)
+					Desc.ZIndex = config.zindex
+					Desc.Font = Enum.Font.Gotham
+					Desc.Text = stuff.desc
+					Desc.TextColor3 = Color3.fromRGB(180, 180, 180)
+					Desc.TextSize = 11.000
+					Desc.TextWrapped = true
+					Desc.TextXAlignment = Enum.TextXAlignment.Left
+					Desc.TextYAlignment = Enum.TextYAlignment.Top
+					Desc.RichText = true
 
 
-						UIListLayout_2.Parent = Option
-						UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
-						UIListLayout_2.Padding = UDim.new(0, 1)
+					UIListLayout_2.Parent = Option
+					UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+					UIListLayout_2.Padding = UDim.new(0, 1)
 
-						UIPadding_2.Parent = Option
-						UIPadding_2.PaddingLeft = UDim.new(0, 4)
-						UIPadding_2.PaddingTop = UDim.new(0, 4)
+					UIPadding_2.Parent = Option
+					UIPadding_2.PaddingLeft = UDim.new(0, 4)
+					UIPadding_2.PaddingTop = UDim.new(0, 4)
 
-						Option.MouseButton1Down:Connect(function()
-							SelectedOption.Text = stuff.name
-							if config.close_on_click then
-								close.Visible = false
-								open.Visible = true
+					Option.MouseButton1Down:Connect(function()
+						SelectedOption.Text = stuff.name
+						if config.close_on_click then
+							print(config.close_on_click)
+							close.Visible = false
+							open.Visible = true
 
-								Content.Visible = false
-							end
-							callback()
-						end)
-
-						local function GDNEJF_fake_script() -- Option.LocalScript 
-							local script = Instance.new('LocalScript', Option)
-		
-							script.Parent.Aitle:GetPropertyChangedSignal("TextBounds"):Connect(function()
-								--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Title.TextBounds.Y))
-								script.Parent.Aitle.Size = UDim2.new(1, 0, 0, script.Parent.Aitle.TextBounds.Y + 4)
-							end)
-							
-							script.Parent.Desc:GetPropertyChangedSignal("TextBounds"):Connect(function()
-								--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Desc.TextBounds.Y))
-								script.Parent.Desc.Size = UDim2.new(1, 0, 0, script.Parent.Desc.TextBounds.Y + 4)
-							end)
-							
-							script.Parent.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-								script.Parent.Size = UDim2.new(1, 0, 0, script.Parent.UIListLayout.AbsoluteContentSize.Y + 4)
-							end)
+							Content.Visible = false
 						end
-						coroutine.wrap(GDNEJF_fake_script)()
+						callback()
+					end)
 
+					local function GDNEJF_fake_script() -- Option.LocalScript 
+						local script = Instance.new('LocalScript', Option)
+	
+						script.Parent.Aitle:GetPropertyChangedSignal("TextBounds"):Connect(function()
+							--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Title.TextBounds.Y))
+							script.Parent.Aitle.Size = UDim2.new(1, 0, 0, script.Parent.Aitle.TextBounds.Y + 4)
+						end)
+						
+						script.Parent.Desc:GetPropertyChangedSignal("TextBounds"):Connect(function()
+							--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Desc.TextBounds.Y))
+							script.Parent.Desc.Size = UDim2.new(1, 0, 0, script.Parent.Desc.TextBounds.Y + 4)
+						end)
+						
+						script.Parent.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+							script.Parent.Size = UDim2.new(1, 0, 0, script.Parent.UIListLayout.AbsoluteContentSize.Y + 4)
+						end)
+					end
+					coroutine.wrap(GDNEJF_fake_script)()
 				end
 				UIListLayout_3.Parent = Content
 				UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center

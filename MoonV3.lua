@@ -1436,6 +1436,300 @@ moon.new = function(title, config)
 				return funcs
 			end
 
+			items.dropdown = function(name, config)
+				name = name or "Dropdown"
+				config = config or {}
+				config.close_on_click = config.close_on_click or true
+				config.zindex = config.zindex or 3
+
+				local content = {}
+
+				local Dropdown = Instance.new("Frame")
+				local UICorner = Instance.new("UICorner")
+				local Title = Instance.new("TextLabel")
+				local UIListLayout = Instance.new("UIListLayout")
+				local TextButton = Instance.new("TextButton")
+				local UICorner_2 = Instance.new("UICorner")
+				local Content = Instance.new("Frame")
+				local UIPadding = Instance.new("UIPadding")
+				local UIListLayout_3 = Instance.new("UIListLayout")
+				local UICorner_3 = Instance.new("UICorner")
+				local BtnBG = Instance.new("Frame")
+				local UICorner_4 = Instance.new("UICorner")
+				local SelectedOption = Instance.new("TextLabel")
+				local UIListLayout_4 = Instance.new("UIListLayout")
+				local close = Instance.new("ImageLabel")
+				local UIPadding_3 = Instance.new("UIPadding")
+				local open = Instance.new("ImageLabel")
+				local UIPadding_4 = Instance.new("UIPadding")
+
+				Dropdown.Name = "Dropdown"
+				Dropdown.Parent = Inner
+				Dropdown.BackgroundColor3 = Color3.fromRGB(26, 26, 26)
+				Dropdown.Size = UDim2.new(0, 378, 0, 32)
+				Dropdown.ZIndex = config.zindex
+
+				UICorner.CornerRadius = UDim.new(0, 6)
+				UICorner.Parent = Dropdown
+
+				Title.Name = "Title"
+				Title.Parent = Dropdown
+				Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				Title.BackgroundTransparency = 1.000
+				Title.Position = UDim2.new(0, 0, 0.09375, 0)
+				Title.Size = UDim2.new(0, 237, 0, 26)
+				Title.ZIndex = config.zindex
+				Title.Font = Enum.Font.Gotham
+				Title.Text = "Dropdown"
+				Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+				Title.TextSize = 12.000
+				Title.TextWrapped = true
+				Title.TextXAlignment = Enum.TextXAlignment.Left
+
+				UIListLayout.Parent = Dropdown
+				UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+				UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+				UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+				UIListLayout.Padding = UDim.new(0, 8)
+
+				TextButton.Parent = Dropdown
+				TextButton.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+				TextButton.Position = UDim2.new(0.588815689, 0, 0.09375, 0)
+				TextButton.Size = UDim2.new(0, 122, 0, 26)
+				TextButton.ZIndex = config.zindex
+				TextButton.AutoButtonColor = false
+				TextButton.Font = Enum.Font.SourceSans
+				TextButton.Text = ""
+				TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+				TextButton.TextSize = 14.000
+
+				UICorner_2.CornerRadius = UDim.new(0, 6)
+				UICorner_2.Parent = TextButton
+
+				Content.Name = "Content"
+				Content.Parent = TextButton
+				Content.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+				Content.BorderSizePixel = 0
+				Content.ClipsDescendants = true
+				Content.Position = UDim2.new(0, 0, 0.192307696, 0)
+				Content.Size = UDim2.new(1, 0, 3.57692313, 95)
+				Content.Visible = false
+				Content.ZIndex = config.zindex
+
+				UIPadding.Parent = Content
+				UIPadding.PaddingTop = UDim.new(0, 30)
+
+				content.add = function(stuff, callback)
+					stuff = stuff or {name = "Option", desc = "Desc"}
+					callback = callback or function() end
+						
+
+						local Option = Instance.new("TextButton")
+						
+						
+						local UIListLayout_2 = Instance.new("UIListLayout")
+						local UIPadding_2 = Instance.new("UIPadding")
+
+						Option.Name = "Option"
+						Option.Parent = Content
+						Option.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+						Option.BorderSizePixel = 0
+						Option.Size = UDim2.new(1, 0, 0, 36)
+						Option.ZIndex = config.zindex
+						Option.Font = Enum.Font.SourceSans
+						Option.Text = ""
+						Option.TextColor3 = Color3.fromRGB(0, 0, 0)
+						Option.TextSize = 14.000
+
+						local Title_2 = Instance.new("TextLabel")
+
+						Title_2.Name = "Aitle"
+						Title_2.Parent = Option
+						Title_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+						Title_2.BackgroundTransparency = 1.000
+						Title_2.Size = UDim2.new(0, 120, 0, 16)
+						Title_2.ZIndex = config.zindex
+						Title_2.Font = Enum.Font.GothamSemibold
+						Title_2.Text = stuff.name
+						Title_2.RichText = true
+						Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
+						Title_2.TextSize = 11.000
+						Title_2.TextXAlignment = Enum.TextXAlignment.Left
+						Title_2.TextYAlignment = Enum.TextYAlignment.Top
+
+						local Desc = Instance.new("TextLabel")
+
+						Desc.Name = "Desc"
+						Desc.Parent = Option
+						Desc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+						Desc.BackgroundTransparency = 1.000
+						Desc.Position = UDim2.new(0, 0, 0.514285743, 0)
+						Desc.Size = UDim2.new(0, 120, 0, 17)
+						Desc.ZIndex = config.zindex
+						Desc.Font = Enum.Font.Gotham
+						Desc.Text = stuff.desc
+						Desc.TextColor3 = Color3.fromRGB(180, 180, 180)
+						Desc.TextSize = 11.000
+						Desc.TextWrapped = true
+						Desc.TextXAlignment = Enum.TextXAlignment.Left
+						Desc.TextYAlignment = Enum.TextYAlignment.Top
+						Desc.RichText = true
+
+
+						UIListLayout_2.Parent = Option
+						UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+						UIListLayout_2.Padding = UDim.new(0, 1)
+
+						UIPadding_2.Parent = Option
+						UIPadding_2.PaddingLeft = UDim.new(0, 4)
+						UIPadding_2.PaddingTop = UDim.new(0, 4)
+
+						Option.MouseButton1Down:Connect(function()
+							SelectedOption.Text = stuff.name
+							if config.close_on_click then
+								close.Visible = false
+								open.Visible = true
+
+								Content.Visible = false
+							end
+							callback()
+						end)
+
+						local function GDNEJF_fake_script() -- Option.LocalScript 
+							local script = Instance.new('LocalScript', Option)
+		
+							script.Parent.Aitle:GetPropertyChangedSignal("TextBounds"):Connect(function()
+								--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Title.TextBounds.Y))
+								script.Parent.Aitle.Size = UDim2.new(1, 0, 0, script.Parent.Aitle.TextBounds.Y + 4)
+							end)
+							
+							script.Parent.Desc:GetPropertyChangedSignal("TextBounds"):Connect(function()
+								--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Desc.TextBounds.Y))
+								script.Parent.Desc.Size = UDim2.new(1, 0, 0, script.Parent.Desc.TextBounds.Y + 4)
+							end)
+							
+							script.Parent.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+								script.Parent.Size = UDim2.new(1, 0, 0, script.Parent.UIListLayout.AbsoluteContentSize.Y + 4)
+							end)
+						end
+						coroutine.wrap(GDNEJF_fake_script)()
+
+				end
+				UIListLayout_3.Parent = Content
+				UIListLayout_3.HorizontalAlignment = Enum.HorizontalAlignment.Center
+				UIListLayout_3.SortOrder = Enum.SortOrder.LayoutOrder
+				UIListLayout_3.Padding = UDim.new(0, 3)
+
+				UICorner_3.CornerRadius = UDim.new(0, 5)
+				UICorner_3.Parent = Content
+
+				BtnBG.Name = "BtnBG"
+				BtnBG.Parent = TextButton
+				BtnBG.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+				BtnBG.BorderSizePixel = 0
+				BtnBG.ClipsDescendants = true
+				BtnBG.Size = UDim2.new(1, 0, -2.65384626, 95)
+				BtnBG.ZIndex = config.zindex
+
+				UICorner_4.CornerRadius = UDim.new(0, 5)
+				UICorner_4.Parent = BtnBG
+
+				SelectedOption.Name = "SelectedOption"
+				SelectedOption.Parent = BtnBG
+				SelectedOption.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				SelectedOption.BackgroundTransparency = 1.000
+				SelectedOption.ClipsDescendants = true
+				SelectedOption.Size = UDim2.new(0, 98, 0, 26)
+				SelectedOption.ZIndex = config.zindex
+				SelectedOption.Font = Enum.Font.Gotham
+				SelectedOption.Text = "..."
+				SelectedOption.TextColor3 = Color3.fromRGB(255, 255, 255)
+				SelectedOption.TextSize = 12.000
+				SelectedOption.TextXAlignment = Enum.TextXAlignment.Left
+
+				UIListLayout_4.Parent = BtnBG
+				UIListLayout_4.FillDirection = Enum.FillDirection.Horizontal
+				UIListLayout_4.SortOrder = Enum.SortOrder.LayoutOrder
+				UIListLayout_4.VerticalAlignment = Enum.VerticalAlignment.Center
+
+				close.Name = "plose"
+				close.Parent = BtnBG
+				close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				close.BackgroundTransparency = 1.000
+				close.Position = UDim2.new(0.830769241, 0, 0.192307696, 0)
+				close.Size = UDim2.new(0, 16, 0, 16)
+				close.Visible = false
+				close.ZIndex = config.zindex
+				close.Image = "rbxassetid://3926305904"
+				close.ImageRectOffset = Vector2.new(164, 284)
+				close.ImageRectSize = Vector2.new(36, 36)
+
+				UIPadding_3.Parent = BtnBG
+				UIPadding_3.PaddingLeft = UDim.new(0, 5)
+
+				open.Name = "open"
+				open.Parent = BtnBG
+				open.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				open.BackgroundTransparency = 1.000
+				open.Position = UDim2.new(0.830769241, 0, 0.192307696, 0)
+				open.Size = UDim2.new(0, 16, 0, 16)
+				open.ZIndex = config.zindex
+				open.Image = "rbxassetid://3926305904"
+				open.ImageRectOffset = Vector2.new(404, 284)
+				open.ImageRectSize = Vector2.new(36, 36)
+				open.Visible = true
+
+				UIPadding_4.Parent = Dropdown
+				UIPadding_4.PaddingLeft = UDim.new(0, 8)
+
+				-- Scripts:
+
+				local function RWCNGE_fake_script() -- Content.LocalScript 
+					local script = Instance.new('LocalScript', Content)
+
+					script.Parent.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+						script.Parent.Size = UDim2.new(1, 0, 0, script.Parent.UIListLayout.AbsoluteContentSize.Y + 33)
+					end)
+				end
+				coroutine.wrap(RWCNGE_fake_script)()
+				local function UNEJWO_fake_script() -- TextButton.LocalScript 
+					local script = Instance.new('LocalScript', TextButton)
+
+					script.Parent.MouseButton1Down:Connect(function()
+						script.Parent.Content.Visible = not script.Parent.Content.Visible
+						if script.Parent.BtnBG.plose.Visible then
+							script.Parent.BtnBG.open.Visible = true
+							script.Parent.BtnBG.plose.Visible = false
+						else
+							script.Parent.BtnBG.plose.Visible = true
+							script.Parent.BtnBG.open.Visible = false
+						end
+					end)
+				end
+				coroutine.wrap(UNEJWO_fake_script)()
+				local function VRFQ_fake_script() -- Dropdown.LocalScript 
+					local script = Instance.new('LocalScript', Dropdown)
+
+					script.Parent.Title:GetPropertyChangedSignal("TextBounds"):Connect(function()
+						--script.Parent.Size = UDim2.new(1, 0, 0, (27 + script.Parent.Title.TextBounds.Y))
+						script.Parent.Size = UDim2.new(0, 378, 0, script.Parent.Title.TextBounds.Y + 20)
+					end)
+					
+				end
+				coroutine.wrap(VRFQ_fake_script)()
+				return content
+			end
+
+			items.expandby = function(int)
+				int = int or 5
+
+				local f = Instance.new("Frame", Inner)
+
+				f.BorderSizePixel = 0
+				f.BackgroundTransparency = 1
+				f.Size = UDim2.new(0,0,0,int)
+			end
+
 			items.colorpicker = function(name, config, callback)
                 name = name or "Color picker"
                 config = config or {}

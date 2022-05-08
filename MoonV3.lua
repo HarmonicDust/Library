@@ -1552,6 +1552,7 @@ moon.new = function(title, config)
 						Title_2.Font = Enum.Font.GothamSemibold
 						Title_2.Text = stuff.name
 						Title_2.RichText = true
+						Title_2.TextWrapped = true
 						Title_2.TextColor3 = Color3.fromRGB(255, 255, 255)
 						Title_2.TextSize = 11.000
 						Title_2.TextXAlignment = Enum.TextXAlignment.Left

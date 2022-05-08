@@ -103,6 +103,16 @@ end)
 	print(toggle.getcurrentstate()): simply prints if the toggle is enabled
 ]]
 
+local dd = section2.dropdown("Dropdown", {close_on_click = true, zindex = 3})
+
+dd.add({name = "Option 1", desc = "Desc 1"}, function()
+    print("u clicked on 1")
+end)
+
+dd.add({name = "Option 2", desc = "Desc 2"}, function()
+    print("u clicked on 2")
+end)
+
 section2.colorpicker("Color picker", {follow_on_invisible = true}, function(color) -- if the color picker ui appears next to library next time you open, if it gets stuck by your screen's end move it away from it
     for i, v in next, game.Players.LocalPlayer.Character:GetDescendants() do
         if v:IsA("BasePart") or v:IsA("Part") then
@@ -116,6 +126,11 @@ section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, r
 	print(val)
 end)
 
+section2.expandby(16) --expands section size
+
+section2.button("Destroy Gui", {}, function()
+	moon.getui():Destroy()		
+end)
 --toggle Styles
 
 for i, v in next, moon.styles do -- for every style

@@ -126,11 +126,12 @@ section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, r
 	print(val)
 end)
 
-section2.expandby(16) --expands section size
-
 section2.button("Destroy Gui", {}, function()
 	moon.getui():Destroy()		
 end)
+
+section2.expandby(16) --expands section size
+
 --toggle Styles
 
 for i, v in next, moon.styles do -- for every style

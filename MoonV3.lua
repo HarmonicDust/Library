@@ -573,6 +573,8 @@ moon.new = function(title, config)
 
 				local binder = {}
 
+                local IDK = {}
+
 				local set = function(new)
 					Bind.Text = new
 				end
@@ -592,6 +594,10 @@ moon.new = function(title, config)
 				function main:set(bind)
 					main.bind = bind
 					set(bind.Name)
+					
+					if IDK.onkeychanged ~= nil then
+					    IDK.onkeychanged(main.bind)
+					end
 				end
 
 				table.insert(binder, Bind)
@@ -612,6 +618,7 @@ moon.new = function(title, config)
 						main:BindInput()
 					end
 				end)
+				return IDK
 			end
 
 			items.button = function(name, config, callback)

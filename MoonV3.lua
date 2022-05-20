@@ -3,13 +3,13 @@
 local moon = {}
 
 moon.styles = {
-    "default",
-    "rounded",
+	"default",
+	"rounded",
 	"classic",
-    "checkbox",
-    "beauty",
-    "vynixu",
-    "sideline"
+	"checkbox",
+	"beauty",
+	"vynixu",
+	"sideline"
 }
 
 local function dragify(Frame)

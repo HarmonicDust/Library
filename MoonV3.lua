@@ -5,6 +5,7 @@ local moon = {}
 moon.styles = {
     "default",
     "rounded",
+	"classic",
     "checkbox",
     "beauty",
     "vynixu",
@@ -864,6 +865,50 @@ moon.new = function(title, config)
                             game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.enabled}):Play()
                         else
                             game:GetService('TweenService'):Create(ImageLabel, TweenInfo.new(config.animationspeed), {ImageColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end
+				end
+
+				if funcs.getstyle() == "classic" then
+                    local Frame = Instance.new("Frame")
+                    local UICorner_9 = Instance.new("UICorner")
+
+                    Frame.Parent = Toggle
+                    Frame.Position = UDim2.new(0.944444418, 0, 0.25, 0)
+                    Frame.Size = UDim2.new(0, 12, 0, 12)
+
+                    UICorner_9.CornerRadius = UDim.new(0, 4)
+                    UICorner_9.Parent = Frame
+				
+                    if config.enabled then
+                        -- default
+                        --if funcs.getstyle() == "default" then
+                            Frame.BackgroundColor3 = moon.colors.toggles.enabled
+
+                    else
+                        --if funcs.getstyle() == "default" then
+                            Frame.BackgroundColor3 = moon.colors.toggles.disabled
+                    end
+
+                    Toggle.MouseButton1Down:Connect(function()
+                        config.enabled = not config.enabled
+                        spawn(function()
+                            callback(config.enabled)
+                        end)
+                        --ctrl c + v lmao
+                        if config.enabled then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
+                        end
+                    end)
+                    
+                    funcs.set = function(new)
+                        config.enabled = new
+                        if new then
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.enabled}):Play()
+                        else
+                            game:GetService('TweenService'):Create(Frame, TweenInfo.new(config.animationspeed), {BackgroundColor3 = moon.colors.toggles.disabled}):Play()
                         end
                     end
 				end

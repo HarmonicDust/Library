@@ -110,6 +110,177 @@ UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 
+local ScreenGui = Instance.new("ScreenGui")
+moon.protectgui(ScreenGui)
+local NotificationStorage = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+
+--Properties:
+
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+NotificationStorage.Name = "NotificationStorage"
+NotificationStorage.Parent = ScreenGui
+NotificationStorage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+NotificationStorage.BackgroundTransparency = 1.000
+NotificationStorage.Position = UDim2.new(0.820695102, 0, 0.0431965441, 0)
+NotificationStorage.Size = UDim2.new(0, 212,0, 696)
+
+UIListLayout.Parent = NotificationStorage
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
+UIListLayout.Padding = UDim.new(0, 6)
+
+moon.SetNotification = function(self)
+
+    local Frame = Instance.new("Frame")
+    local Color = Instance.new("Frame")
+    local Color2 = Instance.new("Frame")
+    local UICorner = Instance.new("UICorner")
+    local TextLabel = Instance.new("TextLabel")
+    local done = Instance.new("ImageButton")
+    local close = Instance.new("ImageButton")
+    local UICorner_2 = Instance.new("UICorner")
+    local UIListLayout = Instance.new("UIListLayout")
+    
+    --Properties:
+    
+    Frame.Parent = NotificationStorage
+    Frame.BackgroundColor3 = Color3.fromRGB(28, 28, 28)
+    Frame.BorderSizePixel = 0
+    Frame.ClipsDescendants = true
+    Frame.Position = UDim2.new(0, 0, 0.836228311, 0)
+    Frame.Size = UDim2.new(0, 200, 0, 66)
+    
+    Color.Name = "Color"
+    Color.Parent = Frame
+    Color.BackgroundColor3 = Color3.fromRGB(255, 110, 112)
+    Color.BorderSizePixel = 0
+    Color.Size = UDim2.new(0, 6, 1, 0)
+    
+    Color2.Name = "Color2"
+    Color2.Parent = Color
+    Color2.BackgroundColor3 = Color3.fromRGB(255, 110, 112)
+    Color2.BorderSizePixel = 0
+    Color2.Position = UDim2.new(0.5, 0, 0, 0)
+    Color2.Size = UDim2.new(0, 3, 1, 0)
+    
+    UICorner.CornerRadius = UDim.new(1, 0)
+    UICorner.Parent = Color
+    
+    TextLabel.Parent = Frame
+    TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.BackgroundTransparency = 1.000
+    TextLabel.BorderSizePixel = 0
+    TextLabel.Position = UDim2.new(0.0500000007, 0, 0.119999997, 0)
+    TextLabel.Size = UDim2.new(0, 182, 0, 54)
+    TextLabel.ZIndex = 0
+    TextLabel.Font = Enum.Font.SourceSans
+    TextLabel.LineHeight = 1.300
+    TextLabel.Text = "<b> ...</b> <br></br>..."
+    TextLabel.RichText = true
+    TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TextLabel.TextSize = 14.000
+    TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+    TextLabel.TextYAlignment = Enum.TextYAlignment.Top
+    
+    done.Name = "done"
+    done.Parent = TextLabel
+    done.BackgroundTransparency = 1.000
+    done.LayoutOrder = 4
+    done.Position = UDim2.new(0.846153855, 0, 0, 0)
+    done.Size = UDim2.new(0, 14, 0, 14)
+    done.ZIndex = 2
+    done.Image = "rbxassetid://3926305904"
+    done.ImageRectOffset = Vector2.new(644, 204)
+    done.ImageRectSize = Vector2.new(36, 36)
+    
+    close.Name = "close"
+    close.Parent = TextLabel
+    close.BackgroundTransparency = 1.000
+    close.Position = UDim2.new(0.923076928, 0, 0, 0)
+    close.Size = UDim2.new(0, 14, 0, 14)
+    close.ZIndex = 2
+    close.Image = "rbxassetid://3926305904"
+    close.ImageRectOffset = Vector2.new(284, 4)
+    close.ImageRectSize = Vector2.new(24, 24)
+    
+    UICorner_2.CornerRadius = UDim.new(0, 6)
+    UICorner_2.Parent = Frame
+    
+    UIListLayout.Parent = Frame
+    UIListLayout.FillDirection = Enum.FillDirection.Horizontal
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.VerticalAlignment = Enum.VerticalAlignment.Center
+    UIListLayout.Padding = UDim.new(0, 4)
+
+    local TweenService = game:GetService("TweenService")
+
+    self.Title = self.Title or "Title"
+    self.Color = self.Color or Color3.fromRGB(40, 58, 98)
+    self.Duration = self.Duration or 5
+    self.Deny = self.Deny or function() end
+    self.Accept = self.Accept or function() end
+    
+    Color.BackgroundColor3 = self.Color
+    Color2.BackgroundColor3 = self.Color
+    
+    if self.Title:find("_expand") then
+        self.Title = self.Title:gsub("_expand", "                ")
+    end
+    
+    if self.Description:find("_expand") then
+        self.Description = self.Description:gsub("_expand", "               ")
+    end
+    
+    if not self.Description or self.Description == "" then
+        TextLabel.Text = "<b> " .. self.Title .. "</b>"
+    else
+        TextLabel.Text = "<b> " .. self.Title .. "</b><br>" .. self.Description .. "</br>"
+    end
+
+    Frame.Visible = true
+
+    TextLabel:GetPropertyChangedSignal("TextBounds"):Connect(function()
+        TextLabel.Size = UDim2.new(0, TextLabel.TextBounds.X + 4, 0, TextLabel.TextBounds.Y + 2)
+        Frame.Size = UDim2.new(0, TextLabel.TextBounds.X + 16, 0, TextLabel.TextBounds.Y + 14)
+    end)
+    Color2.Size = UDim2.new(0, Frame.AbsoluteSize.X - 3, 1, 0)
+    
+    TextLabel.close.Position = UDim2.new(0, TextLabel.TextBounds.X - 14)
+    TextLabel.done.Position = UDim2.new(0, TextLabel.TextBounds.X - 28)
+    
+    local AlreadyClosing = false
+    
+    local function Close()
+        if AlreadyClosing then return end
+        TweenService:Create(Color2, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, Frame.AbsoluteSize.X - 3, 1, 0)}):Play()
+        task.wait(.65)
+        TweenService:Create(Frame, TweenInfo.new(.45, Enum.EasingStyle.Sine), {Size = UDim2.new(0, 0, 0, TextLabel.TextBounds.Y + 14)}):Play()
+        AlreadyClosing = true
+        task.wait(.45)
+        Frame:Destroy()
+    end
+    
+    close.MouseButton1Down:Connect(function()
+        self.Deny()
+        Close()
+    end)
+    
+    done.MouseButton1Down:Connect(function()
+        self.Accept()
+        Close()
+    end)
+    
+    TweenService:Create(Color2, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, 3, 1, 0)}):Play()
+    wait(self.Duration)
+    Close()
+    
+    AlreadyClosing = nil
+end
+
 moon.newmenu = function(menuname, config)
 	menuname = menuname or "Dropdown/Menu"
 	menuname = "<b>"..menuname.."</b>"

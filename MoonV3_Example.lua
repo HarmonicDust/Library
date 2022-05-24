@@ -72,7 +72,7 @@ section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = t
 end)
 
 section1.textbox({text = "Playerbox", placeholder = "Autofills player (display) name", clearonfocus = true, getplayer = true}, function(player)
-    moon.SetNotification({Title = player, Duration = 3, Description = "Set " .. player .. " as your victim", Color = Color3.fromRGB(25,25,25) Accept = function() print("Okay") end, Deny = function() print("Nerd") end})
+    moon.SetNotification({Title = player, Duration = 3, Description = "Set " .. player .. " as your victim", Color = Color3.fromRGB(25,25,25), Accept = function() print("Okay") end, Deny = function() print("Nerd") end})
 end)
 
 section2.button("Button", {

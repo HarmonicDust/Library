@@ -736,7 +736,7 @@ moon.new = function(title, config)
 				Bind.TextColor3 = Color3.fromRGB(255, 255, 255)
 				Bind.TextSize = 13.000
 				Bind:GetPropertyChangedSignal("TextBounds"):Connect(function()
-					Bind.Size = UDim2.new(0, Bind.TextBounds.X + 10, 0, 20)
+					Bind.Size = UDim2.new(0, Bind.TextBounds.X + 14, 0, 20)
 				end)
 
 				UICorner_6.CornerRadius = UDim.new(0, 4)

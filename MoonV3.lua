@@ -227,11 +227,11 @@ moon.SetNotification = function(self)
     Color.BackgroundColor3 = self.Color
     Color2.BackgroundColor3 = self.Color
     
-    if self.Title:find("_expand") then
+    if self.Title and self.Title:find("_expand") then
         self.Title = self.Title:gsub("_expand", "                ")
     end
     
-    if self.Description:find("_expand") then
+    if self.Description and self.Description:find("_expand") then
         self.Description = self.Description:gsub("_expand", "               ")
     end
     

@@ -1,5 +1,4 @@
 local moon = loadstring(game:HttpGet("https://raw.githubusercontent.com/HarmonicDust/Library/main/MoonV3.lua", true))()
-
 moon.default = { --handy tool, kinda like css, except if you don't specify an argument it will set whatever you put here by default, not required
 	toggles = {
 		animationspeed = .35,
@@ -49,7 +48,7 @@ local section3 = tab2.section("Toggle Styles", {opened = true})
 
 --label
 
-section1.label("Harmony: UI and Scripter")
+section1.label("Hourglass: UI and Scripter")
 section1.label("Vynixu: Keybinds and Concept ideas")
 section1.label("Haze: Asked to be in credits (lol)")
 --[[
@@ -59,6 +58,7 @@ section1.label("Haze: Asked to be in credits (lol)")
 ]]
 
 section1.keybind("Keybind", {bind = Enum.KeyCode.E}, function() --creates a keybind, default bind when loaded is E
+	moon.getui().Enabled = not moon.getui().Enabled
 	print("Vynixu stole your slice of bread :(")
 end)
 
@@ -68,10 +68,11 @@ section1.textbox({text = "Textbox", placeholder = "Textbox...", clearonfocus = t
 	if t == "1234" then -- if text is 1234, it will run the line below
 		print("Hello!")
 	end
+	moon.SetNotification({Title = t .. "_expand", Duration = 3}) -- expand is a tool which will expand the title or description of your notification incase check and x overlap
 end)
 
 section1.textbox({text = "Playerbox", placeholder = "Autofills player (display) name", clearonfocus = true, getplayer = true}, function(player)
-    print(player)
+    moon.SetNotification({Title = player, Duration = 3, Description = "Set " .. player .. " as your victim", Color = Color3.fromRGB(25,25,25) Accept = function() print("Okay") end, Deny = function() print("Nerd") end})
 end)
 
 section2.button("Button", {
@@ -127,10 +128,11 @@ section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, r
 end)
 
 section2.button("Destroy Gui", {}, function()
-	moon.getui():Destroy()		
+	moon.getui():Destroy()
+	moon = nil
 end)
 
-section2.expandby(16) --expands section size
+--section2.expandby(16): expands section size (specifically added for dropdowns)
 
 --toggle Styles
 

@@ -124,8 +124,8 @@ NotificationStorage.Name = "NotificationStorage"
 NotificationStorage.Parent = ScreenGui
 NotificationStorage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 NotificationStorage.BackgroundTransparency = 1.000
-NotificationStorage.Position = UDim2.new(0.820695102, 0, 0.0431965441, 0)
-NotificationStorage.Size = UDim2.new(0, 212,0, 696)
+NotificationStorage.Position = UDim2.new(0.82099998, 0, 0, 0)
+NotificationStorage.Size = UDim2.new(0, 212, 0.949999988, 0)
 
 UIListLayout.Parent = NotificationStorage
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
@@ -245,7 +245,8 @@ moon.SetNotification = function(self)
 
     TextLabel:GetPropertyChangedSignal("TextBounds"):Connect(function()
         TextLabel.Size = UDim2.new(0, TextLabel.TextBounds.X + 4, 0, TextLabel.TextBounds.Y + 2)
-        Frame.Size = UDim2.new(0, TextLabel.TextBounds.X + 16, 0, TextLabel.TextBounds.Y + 14)
+        Frame.Size = UDim2.new(0, 0, 0, TextLabel.TextBounds.Y + 14)
+        TweenService:Create(Frame, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, TextLabel.TextBounds.X + 16, 0, TextLabel.TextBounds.Y + 14)}):Play()
     end)
     Color2.Size = UDim2.new(0, Frame.AbsoluteSize.X - 3, 1, 0)
     

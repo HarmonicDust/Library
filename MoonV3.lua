@@ -633,7 +633,7 @@ moon.new = function(title, config)
 			TextLabel.BackgroundTransparency = 1.000
 			TextLabel.Position = UDim2.new(0.0178571437, 0, 0, 0)
 			TextLabel.Size = UDim2.new(0, 382, 0, 28)
-			TextLabel.Text = "_______________________________________________"
+			TextLabel.Text = "__________________________________________________________________"
 			TextLabel.TextColor3 = Color3.fromRGB(44, 44, 44)
 			TextLabel.TextSize = 10.000
 
@@ -1431,11 +1431,11 @@ moon.new = function(title, config)
 				config.loopfire = config.loopfire or false -- true causes performance issues
 				config.runwhenloaded = config.runwhenloaded or false
 
-				local Slider = Instance.new("Frame")
+				local Slider = Instance.new("TextButton")
 				local Name = Instance.new("TextLabel")
 				local UICorner = Instance.new("UICorner")
 				local Value = Instance.new("TextLabel")
-				local Slide = Instance.new("TextButton")
+				local Slide = Instance.new("Frame")
 				local UICorner_2 = Instance.new("UICorner")
 				local Indicator = Instance.new("Frame")
 				local Circle = Instance.new("Frame")
@@ -1449,6 +1449,10 @@ moon.new = function(title, config)
 				Slider.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
 				Slider.Position = UDim2.new(0, 0, 9.33333302, 0)
 				Slider.Size = UDim2.new(0, 378, 0, 46)
+				Slider.AutoButtonColor = false
+				Slider.Font = Enum.Font.SourceSans
+				Slider.Text = ""
+				Slider.TextColor3 = Color3.fromRGB(0, 0, 0)
 
 				Name.Name = "Name"
 				Name.Parent = Slider
@@ -1484,11 +1488,6 @@ moon.new = function(title, config)
 				Slide.BackgroundColor3 = Color3.fromRGB(42, 42, 42)
 				Slide.Position = UDim2.new(0.023, 0, 0.745000005, 0)
 				Slide.Size = UDim2.new(0, 360, 0, 4)
-				Slide.AutoButtonColor = false
-				Slide.Font = Enum.Font.SourceSans
-				Slide.Text = ""
-				Slide.TextColor3 = Color3.fromRGB(0, 0, 0)
-				Slide.TextSize = 14.000
 
 				UICorner_2.CornerRadius = UDim.new(1, 0)
 				UICorner_2.Parent = Slide
@@ -1534,7 +1533,7 @@ moon.new = function(title, config)
 							Indicator:TweenSize(UDim2.fromScale((MousePos.X - Slide.AbsolutePosition.X) / Slide.AbsoluteSize.X, 1), "Out", "Sine", 0.1, true)
 						end
 
-						wait(0.1)
+						task.wait(0.1)
 
 						local Percent = (Circle.AbsolutePosition.X - Slide.AbsolutePosition.X) / (Slide.AbsoluteSize.X - Circle.Size.X.Offset) * config.max
 
@@ -1554,7 +1553,7 @@ moon.new = function(title, config)
 					end
 				end
 				
-				Slide.MouseButton1Down:Connect(function()
+				Slider.MouseButton1Down:Connect(function()
 					Dragging = true
 					Update()
 				end)
@@ -2236,7 +2235,7 @@ moon.new = function(title, config)
 				local UICorner_12 = Instance.new("UICorner")
 				Label.Name = "Label"
 				Label.Parent = Inner
-				Label.BackgroundColor3 = Color3.fromRGB(22, 22, 22)
+				Label.BackgroundColor3 = Color3.fromRGB(23, 23, 23)
 				Label.Position = UDim2.new(0.732804239, 0, 0.115384616, 0)
 				Label.Size = UDim2.new(0, 376, 0, 26)
 

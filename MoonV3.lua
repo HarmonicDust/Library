@@ -83,11 +83,12 @@ moon.default = moon.default or {
 	}
 }
 
-moon.settings = moon.settings or {
-	color_picker_offset = 950,
-	notification_position = UDim2.new(0.9,0,0.1,0)
-}
-
+if not moon.settings then
+	moon.settings = {
+		color_picker_offset = 950,
+		notification_position = UDim2.new(0.9,0,0.1,0)
+	}
+end
 local InBoundArea = Instance.new("ScreenGui")
 
 moon.protectgui(InBoundArea)

@@ -11,7 +11,7 @@ moon.styles = {
 	"vynixu",
 	"sideline"
 }
-task.wait()
+
 local function dragify(Frame)
 	local dragToggle = nil
 	local dragSpeed = .25
@@ -128,7 +128,7 @@ NotificationStorage.Parent = ScreenGui
 NotificationStorage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 NotificationStorage.BackgroundTransparency = 1.000
 NotificationStorage.Position = moon.settings.notification_position
-NotificationStorage.Size = UDim2.new(0, 212, 0.949999988, 0)
+NotificationStorage.Size = UDim2.new(0, 0, 0, 0)
 
 UIListLayout.Parent = NotificationStorage
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right

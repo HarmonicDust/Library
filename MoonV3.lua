@@ -85,7 +85,7 @@ moon.default = moon.default or {
 
 moon.settings = moon.settings or {
 	color_picker_offset = 950,
-	notification_position = {1, 0, 0.1, 0}
+	notification_position = UDim2.new(0,0,0,0)
 }
 
 local InBoundArea = Instance.new("ScreenGui")
@@ -125,7 +125,7 @@ NotificationStorage.Name = "NotificationStorage"
 NotificationStorage.Parent = ScreenGui
 NotificationStorage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 NotificationStorage.BackgroundTransparency = 1.000
-NotificationStorage.Position = UDim2.new(moon.settings.notification_position[1], moon.settings.notification_position[2], moon.settings.notification_position[3], moon.settings.notification_position[4])
+NotificationStorage.Position = moon.settings.notification_position
 NotificationStorage.Size = UDim2.new(0, 212, 0.949999988, 0)
 
 UIListLayout.Parent = NotificationStorage

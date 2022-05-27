@@ -80,12 +80,9 @@ moon.default = moon.default or {
 		animationspeed = .35,
 		style = "default",
 		enabled = false
-	}
-}
-
-moon.settings = moon.settings or {
+	},
 	color_picker_offset = 950,
-	notification_position = UDim2.new(0,0,0,0)
+	notification_position = UDim2.new(0.9,0,0.1,0)
 }
 
 local InBoundArea = Instance.new("ScreenGui")
@@ -125,8 +122,9 @@ NotificationStorage.Name = "NotificationStorage"
 NotificationStorage.Parent = ScreenGui
 NotificationStorage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 NotificationStorage.BackgroundTransparency = 1.000
-NotificationStorage.Position = moon.settings.notification_position
-NotificationStorage.Size = UDim2.new(0, 212, 0.949999988, 0)
+
+NotificationStorage.Position = UDim2.new(.99,0,.98,0)
+NotificationStorage.Size = UDim2.new(0, 0, 0, 0)
 
 UIListLayout.Parent = NotificationStorage
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
@@ -2221,7 +2219,7 @@ moon.new = function(title, config)
                     end
                     game:GetService("RunService").RenderStepped:Connect(function()
                         if not Top.Visible and IsColorPickerInBoundOf(InBoundArea1) then
-                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.settings.color_picker_offset), 0, (Main.Position.Y.Offset))
+                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.default.color_picker_offset), 0, (Main.Position.Y.Offset))
                             --Top.Position = UDim2.new(0, (Main.Position.X.Offset + 950), 0, (Main.Position.Y.Offset + 150))
                         end
                     end)

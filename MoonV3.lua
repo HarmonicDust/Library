@@ -11,7 +11,7 @@ moon.styles = {
 	"vynixu",
 	"sideline"
 }
-
+task.wait()
 local function dragify(Frame)
 	local dragToggle = nil
 	local dragSpeed = .25

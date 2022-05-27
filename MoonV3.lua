@@ -128,7 +128,7 @@ NotificationStorage.Name = "NotificationStorage"
 NotificationStorage.Parent = ScreenGui
 NotificationStorage.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 NotificationStorage.BackgroundTransparency = 1.000
-NotificationStorage.Position = moon.settings.notification_position
+NotificationStorage.Position = moon.notification_position
 NotificationStorage.Size = UDim2.new(0, 0, 0, 0)
 
 UIListLayout.Parent = NotificationStorage
@@ -2224,7 +2224,7 @@ moon.new = function(title, config)
                     end
                     game:GetService("RunService").RenderStepped:Connect(function()
                         if not Top.Visible and IsColorPickerInBoundOf(InBoundArea1) then
-                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.settings.color_picker_offset), 0, (Main.Position.Y.Offset))
+                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.color_picker_offset), 0, (Main.Position.Y.Offset))
                             --Top.Position = UDim2.new(0, (Main.Position.X.Offset + 950), 0, (Main.Position.Y.Offset + 150))
                         end
                     end)

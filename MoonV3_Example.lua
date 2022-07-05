@@ -1,8 +1,9 @@
 local moon = loadstring(game:HttpGet("https://raw.githubusercontent.com/HarmonicDust/Library/main/MoonV3.lua", true))()
+
 moon.default = { --handy tool, kinda like css, except if you don't specify an argument it will set whatever you put here by default, not required
 	toggles = {
 		animationspeed = .35,
-		style = "default",
+		style = "classic",
 		enabled = false
 	}
 }
@@ -48,7 +49,7 @@ local section3 = tab2.section("Toggle Styles", {opened = true})
 
 --label
 
-section1.label("Hourglass: UI and Scripter")
+section1.label("Nyra: UI and Scripter")
 section1.label("Vynixu: Keybinds and Concept ideas")
 section1.label("Haze: Asked to be in credits (lol)")
 --[[
@@ -93,7 +94,7 @@ end)
 	btn.callback() --prints "hello world"
 ]]
 
-local toggle = section2.toggle("Toggle", {enabled = true, animationspeed = .35}, function(state) --enabled on loaded, toggle transition animation speed
+local toggle = section2.toggle("Toggle", {enabled = true, animationspeed = .35, load_auto = true}, function(state) --enabled on loaded, toggle transition animation speed
 	print(state)
 end)
 
@@ -114,12 +115,12 @@ dd.add({name = "Option 2", desc = "Desc 2"}, function()
     print("u clicked on 2")
 end)
 
-section2.colorpicker("Color picker", {follow_on_invisible = true}, function(color) -- if the color picker ui appears next to library next time you open, if it gets stuck by your screen's end move it away from it
-    for i, v in next, game.Players.LocalPlayer.Character:GetDescendants() do
-        if v:IsA("BasePart") or v:IsA("Part") then
-            v.Color = color
-        end
-    end
+section2.colorpicker("Enabled", {follow_on_invisible = true, color = moon.colors.toggles.enabled}, function(color) -- if the color picker ui appears next to library next time you open, if it gets stuck by your screen's end move it away from it
+    moon.colors.toggles.enabled = color
+end)
+
+section2.colorpicker("Disabled", {follow_on_invisible = true, color = moon.colors.toggles.disabled}, function(color1) -- if the color picker ui appears next to library next time you open, if it gets stuck by your screen's end move it away from it
+    moon.colors.toggles.disabled = color1
 end)
 
 section2.slider("Slider", {min = 0, max = 100, default = 50, loopfire = false, runwhenloaded = false}, function(val) -- sliders may be buggy, specifically when loopfire is set to false.

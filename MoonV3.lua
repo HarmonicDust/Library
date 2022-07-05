@@ -75,15 +75,36 @@ moon.colors = moon.colors or {
 	}
 }
 
+moon.colors.toggles = moon.colors.toggles or {}
+
+moon.colors.toggles.enabled = moon.colors.toggles.enabled or Color3.fromRGB(35, 84, 182)
+moon.colors.toggles.disabled = moon.colors.toggles.disabled or Color3.fromRGB(38, 38, 38)
+moon.colors.toggles.enabled_secondary = moon.colors.toggles.enabled_secondary or Color3.fromRGB(28, 64, 141)
+moon.colors.toggles.disabled_secondary = moon.colors.toggles.disabled_secondary or Color3.fromRGB(27, 27, 27)
+
 moon.default = moon.default or {
-	toggles = {
-		animationspeed = .35,
-		style = "default",
-		enabled = false
-	},
-	color_picker_offset = 950,
-	notification_position = UDim2.new(0.9,0,0.1,0)
+-- 	toggles = {
+-- 		animationspeed = .35,
+-- 		style = "default",
+-- 		enabled = false
+-- 	}
 }
+
+moon.settings = moon.settings or {
+-- 	color_picker_offset = 950,
+-- 	notification_position = UDim2.new(0.9,0,0.1,0)
+}
+
+moon.default.toggles = moon.default.toggles or {}
+
+moon.default.toggles.animationspeed = moon.default.toggles.animationspeed or .35
+moon.default.toggles.style = moon.default.toggles.style or "default"
+moon.default.toggles.enabled = moon.default.toggles.enabled or false
+
+moon.settings = moon.settings or {}
+
+moon.settings.color_picker_offset = moon.settings.color_picker_offset or 950
+moon.settings.notification_position = moon.settings.notification_position or UDim2.new(0.9,0,0.1,0)
 
 local InBoundArea = Instance.new("ScreenGui")
 
@@ -150,7 +171,7 @@ moon.SetNotification = function(self)
     Frame.BackgroundColor3 = Color3.fromRGB(28, 28, 28)
     Frame.BorderSizePixel = 0
     Frame.ClipsDescendants = true
-    Frame.Position = UDim2.new(0, 0, 0.836228311, 0)
+    Frame.Position = moon.settings.notification_position or UDim2.new(0, 0, 0.836228311, 0)
     Frame.Size = UDim2.new(0, 200, 0, 66)
     
     Color.Name = "Color"
@@ -911,6 +932,7 @@ moon.new = function(title, config)
 				config.enabled = config.enabled or moon.default.toggles.enabled
 				config.animationspeed = config.animationspeed or moon.default.toggles.animationspeed
                 config.style = config.style or moon.default.toggles.style
+				config.load_auto = config.load_auto or true
 				
 				local funcs = {}
 				
@@ -1418,6 +1440,11 @@ moon.new = function(title, config)
 				Name_3.TextSize = 11.000
 				Name_3.TextWrapped = true
 				Name_3.TextXAlignment = Enum.TextXAlignment.Left
+
+				if config.load_auto then
+					funcs.callback(funcs.getstate())
+				end
+
 				return funcs
 			end
 
@@ -1960,6 +1987,8 @@ moon.new = function(title, config)
                 callback = callback or function() end
 
                 config.follow_on_invisible = config.follow_on_invisible or true
+				config.color = config.color or Color3.fromRGB(255, 255, 255)
+
 				local ColorPicker = Instance.new("Frame")
 				local Name_4 = Instance.new("TextLabel")
 				local UICorner_10 = Instance.new("UICorner")
@@ -1990,7 +2019,7 @@ moon.new = function(title, config)
 
 				Color.Name = "Color"
 				Color.Parent = ColorPicker
-				Color.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				-- Color.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 				Color.Position = UDim2.new(0.891534388, 0, 0.115384616, 0)
 				Color.Size = UDim2.new(0, 40, 0, 20)
 				Color.AutoButtonColor = false
@@ -2153,7 +2182,9 @@ moon.new = function(title, config)
 				
 					Color_Picker.Info = {}
 						Color_Picker.Info.Mouse = game.Players.LocalPlayer:GetMouse()
-						Color_Picker.Info.Color = Color3.fromHSV(1, 1, 1)
+						-- Color_Picker.Info.Color = Color3.fromHSV(1, 1, 1)
+						Color_Picker.Info.Color = config.color
+						Color.BackgroundColor3 = config.color
 						Color_Picker.Info.Data = {1, 1, 1}
 						Color_Picker.Info.IsHoldingMouseButton1 = false
 				
@@ -2219,8 +2250,12 @@ moon.new = function(title, config)
                     end
                     game:GetService("RunService").RenderStepped:Connect(function()
                         if not Top.Visible and IsColorPickerInBoundOf(InBoundArea1) then
-                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + moon.default.color_picker_offset), 0, (Main.Position.Y.Offset))
-                            --Top.Position = UDim2.new(0, (Main.Position.X.Offset + 950), 0, (Main.Position.Y.Offset + 150))
+                            -- pcall(function()
+                            local offset = moon.settings.color_picker_offset or 950
+                            -- print(Main.Position.X.Offset, offset, 0, Main.Position.Y.Offset)
+                            Top.Position = UDim2.new(0, (Main.Position.X.Offset + offset), 0, (Main.Position.Y.Offset + 150))
+                            -- Top.Position = UDim2.new(0, (Main.Position.X.Offset + 950), 0, (Main.Position.Y.Offset + 150))
+                            -- end)
                         end
                     end)
                 end

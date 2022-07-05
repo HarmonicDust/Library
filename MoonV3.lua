@@ -306,7 +306,10 @@ moon.newmenu = function(menuname, config)
 	menuname = menuname or "Dropdown/Menu"
 	menuname = "<b>"..menuname.."</b>"
 	config = config or {}
-	config.closewhenclicked = config.closewhenclicked or false
+	-- config.closewhenclicked = config.closewhenclicked or false
+	if config.closewhenclicked == nil then
+		config.closewhenclicked = false
+	end
 	
 	local menu = {}
 
@@ -503,7 +506,10 @@ moon.new = function(title, config)
 	config = config or {}
 	
 	title = "<b>"..title.."</b>"
-	config.close_tab_onclick = config.close_tab_onclick or true
+	-- config.close_tab_onclick = config.close_tab_onclick or true
+	if config.close_tab_onclick == nil then
+		config.close_tab_onclick = true
+	end
 	local tabs = {}
 
 	local MoonLibraryV3 = Instance.new("ScreenGui")
@@ -627,7 +633,10 @@ moon.new = function(title, config)
 			sname = sname or "Section"
 			config = config or {}
 			
-			config.opened = config.opened or false
+			-- config.opened = config.opened or false
+			if config.opened == nil then
+				config.opened = true
+			end
 			local items = {}
 
 			local Section = Instance.new("Frame")
@@ -929,10 +938,16 @@ moon.new = function(title, config)
 				name = name or "Toggle"
 				config = config or {}
 				callback = callback or function() end
-				config.enabled = config.enabled or moon.default.toggles.enabled
+				-- config.enabled = config.enabled or moon.default.toggles.enabled
+				if config.enabled == nil then
+					config.enabled = true
+				end
 				config.animationspeed = config.animationspeed or moon.default.toggles.animationspeed
                 config.style = config.style or moon.default.toggles.style
-				config.load_auto = config.load_auto or true
+				-- config.load_auto = config.load_auto or true
+				if config.load_auto == nil then
+					config.load_auto = true
+				end
 				
 				local funcs = {}
 				
@@ -1454,8 +1469,15 @@ moon.new = function(title, config)
 				config.min = config.min or 0
 				config.max = config.max or 100
 				config.default = config.default or 50
-				config.loopfire = config.loopfire or false -- true causes performance issues
-				config.runwhenloaded = config.runwhenloaded or false
+				-- config.loopfire = config.loopfire or false -- true causes performance issues
+				if config.loopfire == nil then
+					config.loopfire = false
+				end
+
+				if config.runwhenloaded == nil then
+					config.runwhenloaded = false
+				end
+				-- config.runwhenloaded = config.runwhenloaded or false
 
 				local Slider = Instance.new("TextButton")
 				local Name = Instance.new("TextLabel")
@@ -1633,8 +1655,16 @@ moon.new = function(title, config)
 
 				config.text = config.text or ""
 				config.placeholder = config.placeholder or "Textbox"
-				config.clearonfocus = config.clearonfocus or true
-				config.getplayer = config.getplayer or false
+				-- config.clearonfocus = config.clearonfocus or true
+				-- config.getplayer = config.getplayer or false
+
+				if config.clearonfocus == nil then
+					config.clearonfocus = true
+				end
+
+				if config.getplayer == nil then
+					config.getplayer = false
+				end
 
 				local Textbox = Instance.new("Frame")
 				local UICorner = Instance.new("UICorner")
@@ -1986,7 +2016,12 @@ moon.new = function(title, config)
                 config = config or {}
                 callback = callback or function() end
 
-                config.follow_on_invisible = config.follow_on_invisible or true
+                -- config.follow_on_invisible = config.follow_on_invisible or true
+
+				if config.follow_on_invisible == nil then
+					config.follow_on_invisible = true
+				end
+
 				config.color = config.color or Color3.fromRGB(255, 255, 255)
 
 				local ColorPicker = Instance.new("Frame")

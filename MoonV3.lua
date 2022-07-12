@@ -1868,7 +1868,6 @@ moon.new = function(title, config)
 					Option.MouseButton1Down:Connect(function()
 						SelectedOption.Text = stuff.name
 						if config.close_on_click then
-							print(config.close_on_click)
 							close.Visible = false
 							open.Visible = true
 

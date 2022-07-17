@@ -276,13 +276,15 @@ moon.SetNotification = function(self)
     local AlreadyClosing = false
     
     local function Close()
-        if AlreadyClosing then return end
-        TweenService:Create(Color2, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, Frame.AbsoluteSize.X - 3, 1, 0)}):Play()
-        task.wait(.65)
-        TweenService:Create(Frame, TweenInfo.new(.45, Enum.EasingStyle.Sine), {Size = UDim2.new(0, 0, 0, TextLabel.TextBounds.Y + 14)}):Play()
-        AlreadyClosing = true
-        task.wait(.45)
-        Frame:Destroy()
+	spawn(function()
+		if AlreadyClosing then return end
+		TweenService:Create(Color2, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, Frame.AbsoluteSize.X - 3, 1, 0)}):Play()
+		task.wait(.65)
+		TweenService:Create(Frame, TweenInfo.new(.45, Enum.EasingStyle.Sine), {Size = UDim2.new(0, 0, 0, TextLabel.TextBounds.Y + 14)}):Play()
+		AlreadyClosing = true
+		task.wait(.45)
+		Frame:Destroy()
+	end)
     end
     
     close.MouseButton1Down:Connect(function()
@@ -295,11 +297,12 @@ moon.SetNotification = function(self)
         Close()
     end)
     
-    TweenService:Create(Color2, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, 3, 1, 0)}):Play()
-    wait(self.Duration)
-    Close()
-    
-    AlreadyClosing = nil
+	spawn(function()
+	    TweenService:Create(Color2, TweenInfo.new(.65, Enum.EasingStyle.Circular), {Size = UDim2.new(0, 3, 1, 0)}):Play()
+	    wait(self.Duration)
+	    Close()
+	AlreadyClosing = nil
+	end)
 end
 
 moon.newmenu = function(menuname, config)
